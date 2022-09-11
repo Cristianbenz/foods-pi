@@ -8,7 +8,7 @@ const agent = session(app);
 const recipe = {
   id: 'hjku44',
   name: "Milanesa a la napolitana",
-  resume: '',
+  summary: '',
   healtScore: 4,
   steps: '',
   kindOfDiet: [
@@ -23,7 +23,7 @@ describe("Recipe routes", () => {
     });
   });
 
-  xit("Should return 200", () => expect(agent.get("/recipes")).to.be(200));
+  xit("Should return 200", () => agent.get("/recipes").expect(200));
 
   describe("GET /recipes?name", () => {
     beforeEach(() => {
@@ -58,7 +58,7 @@ describe("Recipe routes", () => {
       return agent.get('/recipes/hjku44')
       .then(res => {
         expect(res.body.toJSON()).to.haveOwnProperty('id', 'hjku44')
-        expect(res.body.toJSON()).to.have.keys(['name', 'resume', 'image', 'healtScore', 'steps', 'kindOfDiet'])
+        expect(res.body.toJSON()).to.have.keys(['name', 'summary', 'image', 'healtScore', 'steps', 'kindOfDiet'])
       })
     });
 
@@ -92,9 +92,9 @@ describe("Recipe routes", () => {
         expect(res.statusCode).to.be(201)
       })
       .then(async() => {
-        const [results] = await conn.query('SELECT "DietId" FROM "RecipeDiets" WHERE RecipeId = "hjku44"');
-        expect(results[0].RecipeId).to.be('hjku44')
+        const [results] = await conn.query('SELECT "dietId" FROM "RecipeDiets" WHERE "recipeId" = "hjku44"');
         expect(results.length).to.be(1)
+        expect(results[0].RecipeId).to.be('hjku44')
       })
     });
 

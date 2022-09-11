@@ -15,7 +15,7 @@ describe('Recipe model', () => {
       try {
         await Recipe.create({
           name: 'Pure de papa',
-          resume: 'Papa pisada con leche'
+          summary: 'Papa pisada con leche'
         });
       } catch (error) {
         expect(error.message).toBeDefined();
@@ -27,19 +27,19 @@ describe('Recipe model', () => {
       try {
         await Recipe.create({
           id: '12juju',
-          resume: 'Carne hecha a las brazas'
+          summary: 'Carne hecha a las brazas'
         });
       } catch (error) {
         expect(error.message).toBeDefined();
       }
     });
 
-    xit('should not create the Recipe if resume is not send', async () => {
+    xit('should not create the Recipe if summary is not send', async () => {
       expect.assertions(1);
       try {
         await Recipe.create({
           id: 'h8ujs9',
-          name: 'Pizza'
+          summary: 'Pizza'
         });
       } catch (error) {
         expect(error.message).toBeDefined();
@@ -50,11 +50,11 @@ describe('Recipe model', () => {
       const recipe = await Ability.create({
         id: 'mghyusd',
         name: '',
-        resume: ''
+        summary: ''
       });
       expect(recipe.toJSON()).toHaveProperty('id','mghyusd');
       expect(recipe.toJSON()).toHaveProperty('name', '');
-      expect(recipe.toJSON()).toHaveProperty('resume', '');
+      expect(recipe.toJSON()).toHaveProperty('summary', '');
     });
 
   });
