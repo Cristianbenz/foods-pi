@@ -14,6 +14,9 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    image: {
+      type: DataTypes.STRING
+    },
     summary: {
       type: DataTypes.TEXT,
       allowNull: false
@@ -26,7 +29,7 @@ module.exports = (sequelize) => {
       }
     },
     steps: {
-      type: DataTypes.TEXT
+      type: DataTypes.ARRAY
     }
   });
 };
