@@ -1,6 +1,9 @@
-import { CardContainer, InfoContainer, CardTitle, HealthScorePin, DietsList, DietItem } from "./styles"
+import imgPredeterminada from '../../assets/imgPredeterminada.png'
+import { CardContainer, InfoContainer, HealthScorePin, DietsList } from "./styles"
 
-export default function Card({ id, name, image, diets, healthScore }) {
+export default function Card({ id, name='Anonimo', image, diets=[], healthScore=0 }) {
+	if(!image) image = imgPredeterminada;
+	
 	return (
 		<CardContainer>
 			<HealthScorePin>{healthScore}</HealthScorePin>
@@ -8,10 +11,10 @@ export default function Card({ id, name, image, diets, healthScore }) {
 			<InfoContainer>
 				<DietsList>
 					{
-						diets.map(el => <DietItem key={diets.indexOf(el) + 1}>{el}</DietItem>)
+						diets.map(el => <li key={diets.indexOf(el) + 1}>{el}</li>)
 					}
 				</DietsList>
-				<CardTitle>{name}</CardTitle>
+				<h3>{name}</h3>
 			</InfoContainer>
 		</CardContainer>
 	)  
