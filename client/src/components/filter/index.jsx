@@ -1,7 +1,7 @@
 // import { useEffect } from "react";
 // import { useHistory } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { sortRecipes } from '../../redux/actions';
+import { sortRecipes, filterByDiets } from '../../redux/actions';
 
 import DietsCheckbox from '../dietsCheckbox'
 
@@ -35,8 +35,7 @@ export default function Filter() {
   // },[location.pathname, location.search, dispatch])
 
   function handleDiets(values) {
-    console.log(values)
-    // dispatch()
+    dispatch(filterByDiets(values))
   }
 
 

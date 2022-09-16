@@ -3,8 +3,7 @@ import axios from "axios";
 export const GET_RECIPES = "GET_RECIPES";
 export const SEARCH_BY_NAME = "SEARCH_BY_NAME";
 export const ORDER_BY = "ORDER_BY";
-export const FILTER_BY = "FILTER_BY";
-export const PAGINATION = "PAGINATION"
+export const FILTER_BY_DIETS = "FILTER_BY_RECIPE";
 export const GET_DETAILS = "GET_DETAILS";
 export const ADD_RECIPE = "ADD_RECIPE";
 export const GET_DIETS = "GET_DIETS";
@@ -84,16 +83,9 @@ export function sortRecipes(sort, sortDirection) {
   }
 }
 
-export function filterRecipes(diets) {
+export function filterByDiets(diets) {
   return {
-    type: FILTER_BY,
+    type: FILTER_BY_DIETS,
     payload: [...diets]
-  }
-}
-
-export function pagination(offset) {
-  return {
-    type: PAGINATION,
-    payload: offset
   }
 }
