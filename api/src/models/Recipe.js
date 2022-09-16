@@ -25,11 +25,11 @@ module.exports = (sequelize) => {
       type: DataTypes.FLOAT,
       validate: {
         min: 0,
-        max: 10
+        max: 100
       }
     },
     steps: {
-      type: DataTypes.ARRAY
+      type: DataTypes.ARRAY(DataTypes.STRING)
     }
   });
 };

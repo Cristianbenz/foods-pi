@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Form = styled.div`
+export const Form = styled.form`
   font-size: 20px;
   display: flex;
   gap: 17px;
@@ -70,6 +70,7 @@ export const StepsContainer = styled.div`
 `;
 
 export const Button = styled.button`
+  cursor: pointer;
   width: 90%;
   margin: auto;
   padding: 10px 20px;

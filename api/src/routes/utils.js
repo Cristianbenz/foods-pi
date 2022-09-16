@@ -1,14 +1,14 @@
 const axios = require("axios");
 require("dotenv").config();
-const { Recipe, Diet } = require('../db')
+const { Recipe, Diet } = require("../db");
 const { API_KEY } = process.env;
 
 // const URL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true`
+// key1 aa744f5fc8b64f3391f874517678699d
+const API = "https://api.spoonacular.com/";
+const LIST_URL = `${API}recipes/complexSearch?apiKey=aa744f5fc8b64f3391f874517678699d&addRecipeInformation=true&limit=100`;
 
-const LIST_URL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=42997e25cd1242449b9cdd4037222a95&addRecipeInformation=true&limit=100`;
-const DETAILS_URL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=42997e25cd1242449b9cdd4037222a95&addRecipeInformation=true&limit=100`;
-
-function preloadDiets() {
+async function preloadDiets() {
   const diets = [
     "Gluten Free",
     "Ketogenic",
@@ -21,81 +21,119 @@ function preloadDiets() {
     "Primal",
     "Low FODMAP",
     "Whole30",
-  ].map((el) => {return { name: el}});
+  ].map((el) => {
+    return { name: el };
+  });
 
   Diet.bulkCreate(diets);
 }
 
-async function getApiRecipes() {
+async function getApiRecipes(flags) {
   try {
-    let results = await axios(LIST_URL)
-    return results.data?.results.map((recipe) => {
-      return {
-        image: recipe.image,
-        name: recipe.name,
-        healthScore: recipe.healthScore,
-        diets: recipe.diets
-      };
-    });
+    let get = await axios(LIST_URL);
+    let results = get.data.results;
+
+    if (flags.name && get.data) {
+      results = get.data?.results.filter((recipe) => {
+        return recipe.title.toLowerCase().includes(flags.name.toLowerCase());
+      });
+    }
+
+    if (results)
+      return results.map((recipe) => {
+        return {
+          id: recipe.id,
+          image: recipe.image,
+          name: recipe.title,
+          healthScore: recipe.healthScore,
+          diets: recipe.diets,
+        };
+      });
   } catch (error) {
-      return
+      return;
   }
 }
 
-async function getDbRecipes() {
+async function getDbRecipes(flags) {
+  let where = flags.name && { name: flags.name };
+
+  let options = {
+    where,
+    attributes: ["name", "id", "image", "healthScore"],
+    include: Diet,
+  };
+
   try {
-    let results = await Recipe.findAll();
-    return results.map((recipe) => {
-      return {
-        image: recipe.image,
-        name: recipe.name,
-        healthScore: recipe.healthScore,
-        diets: recipe.diets
-      };
-    });
+    let results = await Recipe.findAll(options);
+    return results;
   } catch (error) {
-      return
+    return;
   }
 }
 
-function getRecipeList() {
+async function getRecipeList(flags) {
   try {
-    return [...getDbRecipes().concat(getApiRecipes())] 
+    const dbRecipes = await getDbRecipes(flags)
+    const apiRecipes = await getApiRecipes(flags)
+    return [...dbRecipes, ...apiRecipes]
+    
   } catch (error) {
-      console.log(error)
+    throw Error(error);
   }
 }
 
 async function getByIdAtApi(id) {
-  let recipe = await axios(`https://api.spoonacular.com/recipes/${id}/information`).data
-  return {
-    image: recipe.image,
-    name: recipe.name,
-    healthScore: recipe.healthScore,
-    diets: recipe.diets,
-    summary: recipe.summary,
-    steps: recipe.analyzedInstructions[0].steps.map(el => el.step)
+  try {
+    let response = await axios(
+      `${API}recipes/${id}/information?includeNutrition=false&apiKey=aa744f5fc8b64f3391f874517678699d`
+    );
+    let recipe = response.data;
+    return {
+      image: recipe.image,
+      name: recipe.title,
+      healthScore: recipe.healthScore,
+      diets: recipe.diets,
+      summary: recipe.summary,
+      steps: recipe.analyzedInstructions[0].steps.map((el) => el.step),
+    };
+  } catch (error) {
+    throw Error(error);
   }
 }
 
 async function getByPkDb(id) {
-  let recipe = await Recipe.findByPk(id, { include: Recipe })
-  return recipe
+  try {
+    let recipe = await Recipe.findByPk(id, {
+      include: {
+        model: Diet,
+        through: {
+          attributes: ["name"],
+        },
+      },
+    });
+    return recipe;
+  } catch (e) {
+    return undefined;
+  }
 }
 
-function getRecipeDetails(recetaId) {
-  return getByPkDb(recetaId) || getByIdAtApi(recetaId)
+async function getRecipeDetails(recetaId) {
+  try {
+    return await getByPkDb(recetaId) || await getByIdAtApi(recetaId);
+  } catch (error) {
+    throw Error(error);
+  }
 }
 
 function recipeDataValidation(body) {
-  if(!body.name || !body.summary ) return true
+  if (!body.name || !body.summary) return true;
 
-  return false
+  return false;
 }
 
 module.exports = {
   preloadDiets,
-	getRecipeList,
+  getRecipeList,
   getRecipeDetails,
-  recipeDataValidation
+  recipeDataValidation,
 };

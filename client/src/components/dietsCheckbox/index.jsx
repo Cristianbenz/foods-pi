@@ -1,27 +1,37 @@
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { getDiets } from '../../redux/actions';
+
 import { CheckBoxContainer } from './styles'
 
-export default function DietsCheckbox() {
-	const dietas = [
-    "Gluten Free",
-    "Ketogenic",
-    "Vegetarian",
-    "Lacto-Vegetarian",
-    "Ovo-Vegetarian",
-    "Vegan",
-    "Pescetarian",
-    "Paleo",
-    "Primal",
-    "Low FODMAP",
-    "Whole30",
-  ];
-	
+export default function DietsCheckbox({cb}) {
+  const [ options, setOptions ] = useState([])
+	const diets = useSelector(state => state.diets)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getDiets())
+  }, [dispatch])
+
+  function onChange(e) {
+    let check = e.target
+    if(check.checked) {
+      setOptions(other => [...other, check.value])
+    } else {
+      setOptions(other => other.filter(name => name !== check.value))
+    }
+    
+    cb(options)
+  }
+
   return (
     <CheckBoxContainer>
       <span>Tipo de dieta</span>
-      {dietas.map((el) => (
-        <label key={dietas.indexOf(el)} htmlFor={el}>
-          <input type="checkbox" name={el} id={el} value={el} />
-          {el}
+      {diets?.map((el) => (
+        <label onChange={onChange} key={el.id} htmlFor={el.id}>
+          <input type="checkbox" name={el.name} id={el.id} value={el.name} />
+          {el.name}
         </label>
       ))}
     </CheckBoxContainer>

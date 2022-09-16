@@ -1,15 +1,25 @@
+import { Link } from 'react-router-dom'
+
 import Card from "../card";
 
-export default function CardsList() {
+import { Cardscontainer } from './styles'
+
+export default function CardsList({ list }) {
   return (
-    <section>
-      <Card
-        id
-        name="Pasta Frola"
-        image="https://d320djwtwnl5uo.cloudfront.net/recetas/cover/pasta_KDw02RFfquAGvZ8hYx9tLbNWcnslCT.png"
-        healthScore={90}
-        diets={["Vegetariano", "Carnivoro", "Taloquito"]}
-      />
-    </section>
+    <Cardscontainer>
+      {list?.map((rcp) => {
+        return (
+          <Link to={`/recipe/${rcp.id}`}>
+            <Card
+              key={rcp.id}
+              id={rcp.id}
+              name={rcp.name}
+              image={rcp.image}
+              healthScore={rcp.healthScore}
+              diets={rcp.diets?.map(el => el.name || el)}
+            />
+          </Link>);
+      })}
+    </Cardscontainer>
   );
 }

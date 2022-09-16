@@ -33,7 +33,7 @@ export const InfoContainer = styled.div`
 
 export const DietsList = styled.ul`
   display: flex;
-  flex-wrap: 1;
+  flex-wrap: wrap;
   list-style-type: none;
   gap: 5px;
 

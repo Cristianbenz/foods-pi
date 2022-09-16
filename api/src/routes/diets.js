@@ -1,6 +1,5 @@
 const { Router } = require('express')
 const { Diet } = require('../db')
-const { preloadDiets } = require('./utils')
 
 const router = Router()
 

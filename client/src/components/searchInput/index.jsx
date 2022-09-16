@@ -1,14 +1,40 @@
-import { useLocation } from "react-router-dom";
+import { useRef, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { searchByName } from '../../redux/actions';
 
 import { Input } from "./styles";
 
 export default function SearchInput() {
-  const { pathname } = useLocation();
+  const {push, location} = useHistory()
+  const dispatch = useDispatch()
+  const input = useRef()
 
-  if (pathname === "/home")
+  function onChange(e) {
+    let input = e.target
+    push(`/home?name=${input.value}`)
+  }
+
+  useEffect(() => {
+    if(location.search.includes('name')) {
+      let getName = location.search?.split('&').find(el => el.includes('name'));
+      let query = getName.split('=').at(-1);
+      dispatch(searchByName(query))
+      console.log(query)
+    }
+  }, [location.pathname, location.search,dispatch])
+
+  function submit(e) {
+    e.preventDefault()
+    let getName = location.search?.split('&').find(el => el.includes('name'));
+    let query = getName.split('=').at(-1);
+    dispatch(searchByName(query))
+  }
+
+  if (location.pathname === "/home")
     return (
-      <form>
-        <Input type="text" placeholder="🍳" />
+      <form onSubmit={submit}>
+        <Input ref={input} type="text" placeholder="🍳" onChange={onChange} />
       </form>
     );
 

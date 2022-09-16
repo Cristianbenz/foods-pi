@@ -3,9 +3,10 @@ import styled from "styled-components";
 export const FilterContainer = styled.aside`
 	border-radius: 10px;
 	background-color: ${({ theme }) => theme.color.secondary};
-	width: 345px;
+	width: 400px;
+	height: max-content;
 	min-height: 600px;
-	padding: 25px 23px;
+	padding: 25px 20px;
 	gap: 70px;
 `
 
