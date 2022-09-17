@@ -10,10 +10,10 @@ export const GET_DIETS = "GET_DIETS";
 
 let api = "http://localhost:3001/";
 
-export function getRecipes() {
+export function getRecipes(name) {
   return async (dispatch) => {
     try {
-      let recipes = await axios(`${api}recipes`);
+      let recipes = await axios(`${api}recipes?name=${name?.toLowerCase()}`);
       dispatch({
         type: GET_RECIPES,
         payload: recipes.data,
