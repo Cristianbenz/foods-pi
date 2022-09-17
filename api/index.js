@@ -22,7 +22,7 @@ const { conn } = require('./src/db.js');
 const { preloadDiets } = require('./src/routes/utils');
 require('dotenv').config();
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(preloadDiets).then(() => {

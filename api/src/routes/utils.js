@@ -3,10 +3,9 @@ require("dotenv").config();
 const { Recipe, Diet } = require("../db");
 const { API_KEY } = process.env;
 
-// const URL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true`
-// key1 aa744f5fc8b64f3391f874517678699d
+console.log(API_KEY)
 const API = "https://api.spoonacular.com/";
-const LIST_URL = `${API}recipes/complexSearch?apiKey=aa744f5fc8b64f3391f874517678699d&addRecipeInformation=true&limit=100`;
+const LIST_URL = `${API}recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&limit=100`;
 
 async function preloadDiets() {
   const diets = [
