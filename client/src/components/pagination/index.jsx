@@ -1,29 +1,35 @@
-import { useState } from "react";
+import { Container, NumsList } from "./styles";
 
-export default function Pagination({ totalPages = 1, handle }) {
-  const [pags, setPags] = useState([]);
+export default function Pagination({ totalPages, currentPage, handle }) {
+  const pages = [1]
 
-  for (let i = 1; i <= totalPages; i++) {
-    setPags((prevPags) => [...prevPags, i]);
+  for (let i = 2; i <= totalPages; i++) {
+    pages.push(i);
   }
 
   function handleNum(num) {
-    handle(num);
+    handle(num)
+  }
+
+  function handleLess() {
+    handle(currentPage - 1)
   }
   
+  function handleMore() {
+    handle(currentPage + 1)
+  }
+
   return (
-    <div>
-      <span></span>
-      <ul>
-        {pags.map((num) => {
+    <Container>
+      {currentPage > 1 && <span onClick={handleLess}>atras</span>}
+      <NumsList>
+        {pages.map((num) => {
           return (
-            <li onClick={() => handleNum(num)} key={num}>
-              num
-            </li>
+            <li key={num} onClick={() => handleNum(num)} >{num}</li>
           );
         })}
-      </ul>
-      <span></span>
-    </div>
+      </NumsList>
+      {currentPage < pages.length && <span onClick={handleMore}>adelante</span>}
+    </Container>
   );
 }

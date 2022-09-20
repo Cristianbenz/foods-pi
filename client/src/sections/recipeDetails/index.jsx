@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 
 import { getDetails } from "../../redux/actions";
+import imgPredeterminada from '../../assets/imgPredeterminada.png'
 
 import { FirstSection, RecipeImg, ScoreNumber, DietsList, SecondSection, StepsList } from './styles'
 
@@ -15,20 +16,20 @@ export default function RecipeDetails() {
     dispatch(getDetails(recipeId));
   }, [dispatch, recipeId]);
 
-  const { name, img, healthScore, diets, summary, steps } = details
+  const { name, image, healthScore, diets, summary, steps } = details
   return (
     details && (
       <>
         <FirstSection>
-          <RecipeImg src={img} alt="Foto de la receta" />
+          <RecipeImg src={image || imgPredeterminada} alt="Foto de la receta" />
           <article>
             <h1>{name}</h1>
             <h2>HealthScore: <ScoreNumber>{healthScore}</ScoreNumber></h2>
-            <h2>Tipo de dieta</h2>
+            <h2>Tipo de dieta:</h2>
             <DietsList>
               {
                 diets?.map(el => {
-                  return <li key={el.id}>{el.name}</li>
+                  return <li key={diets.indexOf(el)}>{el.name || el}</li>
                 })
               }
             </DietsList>
@@ -43,7 +44,10 @@ export default function RecipeDetails() {
             <h2>Paso a paso</h2>
             <StepsList>
               {steps?.map(el => {
-                return <li>{el}</li>
+                return <li key={steps.indexOf(el)}>
+                  <span>{steps.indexOf(el) + 1}</span>
+                  {JSON.parse(el).value || el}
+                </li>
               })}
             </StepsList>
           </div>

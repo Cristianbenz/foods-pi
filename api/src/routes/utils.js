@@ -2,11 +2,9 @@ const axios = require("axios");
 require("dotenv").config();
 const { Recipe, Diet } = require("../db");
 const { API_KEY } = process.env;
-
-console.log(API_KEY)
 const API = "https://api.spoonacular.com/";
+const recipes = require('./api.json')
 const LIST_URL = `${API}recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&limit=100`;
-
 async function preloadDiets() {
   const diets = [
     "Gluten Free",
@@ -29,11 +27,15 @@ async function preloadDiets() {
 
 async function getApiRecipes(flags) {
   try {
-    let get = await axios(LIST_URL);
-    let results = get.data.results;
+    // let get = await axios(LIST_URL);
+    // let results = get.data.results;
+    let results = recipes.results;
 
     if (flags.name && get.data) {
-      results = get.data?.results.filter((recipe) => {
+      // results = get.data?.results.filter((recipe) => {
+      //   return recipe.title.toLowerCase().includes(flags.name.toLowerCase());
+      // });
+      results = results.filter((recipe) => {
         return recipe.title.toLowerCase().includes(flags.name.toLowerCase());
       });
     }
@@ -49,7 +51,7 @@ async function getApiRecipes(flags) {
         };
       });
   } catch (error) {
-      return;
+      return undefined;
   }
 }
 
@@ -96,20 +98,14 @@ async function getByIdAtApi(id) {
       steps: recipe.analyzedInstructions[0].steps.map((el) => el.step),
     };
   } catch (error) {
-    throw Error(error);
+    return undefined;
   }
 }
 
 async function getByPkDb(id) {
   try {
-    let recipe = await Recipe.findByPk(id, {
-      include: {
-        model: Diet,
-        through: {
-          attributes: ["name"],
-        },
-      },
-    });
+    let recipe = await Recipe.findByPk(id, {include: Diet});
+    console.log(recipe)
     return recipe;
   } catch (e) {
     return undefined;

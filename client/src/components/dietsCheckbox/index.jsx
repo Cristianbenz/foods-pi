@@ -18,11 +18,13 @@ export default function DietsCheckbox({cb}) {
     let check = e.target
     if(check.checked) {
       setOptions(other => [...other, check.value])
+      cb([...options, check.value])
     } else {
       setOptions(other => other.filter(name => name !== check.value))
+      cb(options.filter(name => name !== check.value))
     }
     
-    cb(options)
+    
   }
 
   return (

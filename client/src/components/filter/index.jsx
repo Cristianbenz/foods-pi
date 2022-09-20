@@ -15,8 +15,10 @@ export default function Filter() {
 
   function handleSelect(e) {
     let option = e.target
-    let {sort, sortDirection} = JSON.parse(option.value)
+    if(!option.value) return
+    let {sort, sortDirection} = JSON.parse(option.value);
     dispatch(sortRecipes(sort, sortDirection))
+
     // let createLink = location.search.length < 1
     //   ? `?sort=${sort}&sortDirection=${sortDirection}`
     //   : `&sort=${sort}&sortDirection=${sortDirection}`
@@ -41,14 +43,15 @@ export default function Filter() {
 
   return (
     <FilterContainer>
-      <FilterForm>
+      <FilterForm >
         <label>
           Ordenar por:
-          <select >
-            <option onClick={handleSelect} value={JSON.stringify({sort: 'name', sortDirection: 'ASC'}) } >Alfabetico A - Z</option>
-            <option onClick={handleSelect} value={ JSON.stringify({sort: 'name', sortDirection: 'DESC'}) } >Alfabetico Z - A</option>
-            <option onClick={handleSelect} value={ JSON.stringify({sort: 'name', sortDirection: 'ASC'})} >HealthScore Asc </option>
-            <option onClick={handleSelect} value={ JSON.stringify({sort: 'name', sortDirection: 'DESC'}) } >HealthScore Desc</option>
+          <select onChange={handleSelect} >
+            <option></option>
+            <option value={JSON.stringify({sort: 'name', sortDirection: 'ASC'}) } >Alfabetico A - Z</option>
+            <option value={ JSON.stringify({sort: 'name', sortDirection: 'DESC'}) } >Alfabetico Z - A</option>
+            <option value={ JSON.stringify({sort: 'healthScore', sortDirection: 'ASC'})} >HealthScore Asc </option>
+            <option defaultValue={'true'} value={ JSON.stringify({sort: 'healthScore', sortDirection: 'DESC'}) } >HealthScore Desc</option>
           </select>
         </label>
         <DietsCheckbox cb={handleDiets} />

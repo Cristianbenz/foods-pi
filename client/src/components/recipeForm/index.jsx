@@ -23,6 +23,7 @@ export default function RecipeForm({
 	function submitForm(e) {
 		e.preventDefault()
 		if(Object.keys(error) < 1) {
+      console.log(data)
 			dispatch(addRecipe(data))
 		}
 	}

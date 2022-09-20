@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { searchByName, getRecipes } from '../../redux/actions';
+import { getRecipes } from '../../redux/actions';
 
 import { Input } from "./styles";
 

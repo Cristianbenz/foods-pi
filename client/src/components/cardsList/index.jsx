@@ -7,11 +7,10 @@ import { Cardscontainer } from './styles'
 export default function CardsList({ list }) {
   return (
     <Cardscontainer>
-      {list?.map((rcp) => {
+      {list.map((rcp) => {
         return (
-          <Link to={`/recipe/${rcp.id}`}>
+          <Link key={rcp.id} to={`/recipe/${rcp.id}`}>
             <Card
-              key={rcp.id}
               id={rcp.id}
               name={rcp.name}
               image={rcp.image}

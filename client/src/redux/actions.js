@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const GET_RECIPES = "GET_RECIPES";
-export const SEARCH_BY_NAME = "SEARCH_BY_NAME";
 export const ORDER_BY = "ORDER_BY";
 export const FILTER_BY_DIETS = "FILTER_BY_RECIPE";
 export const GET_DETAILS = "GET_DETAILS";
@@ -11,25 +10,12 @@ export const GET_DIETS = "GET_DIETS";
 let api = "http://localhost:3001/";
 
 export function getRecipes(name) {
+  let nameQuery = name ? name.toLowerCase() : "";
   return async (dispatch) => {
     try {
-      let recipes = await axios(`${api}recipes?name=${name?.toLowerCase()}`);
+      let recipes = await axios(`${api}recipes?name=${nameQuery}`);
       dispatch({
         type: GET_RECIPES,
-        payload: recipes.data,
-      });
-    } catch (error) {
-      throw Error(error);
-    }
-  };
-}
-
-export function searchByName(name) {
-  return async (dispatch) => {
-    try {
-      let recipes = await axios(`${api}recipes?name=${name.toLowerCase()}`);
-      dispatch({
-        type: SEARCH_BY_NAME,
         payload: recipes.data,
       });
     } catch (error) {
@@ -71,21 +57,22 @@ export function getDiets() {
         payload: diets.data,
       });
     } catch (error) {
-      throw Error(error)
+      throw Error(error);
     }
   };
 }
 
 export function sortRecipes(sort, sortDirection) {
-  return{
+  return {
     type: ORDER_BY,
-    payload: {sort, sortDirection}
-  }
+    payload: { sort, sortDirection },
+  };
 }
 
 export function filterByDiets(diets) {
+  const parsedDiets = diets.map(el => el.toLowerCase())
   return {
     type: FILTER_BY_DIETS,
-    payload: [...diets]
-  }
+    payload: [...parsedDiets],
+  };
 }

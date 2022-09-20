@@ -5,39 +5,51 @@ import { getRecipes } from "../../redux/actions";
 import CardsList from "../../components/cardsList";
 import Filter from "../../components/filter";
 import Pagination from "../../components/pagination";
+import Loader from "../../components/loader";
 
 import { BodyContainer } from "./styles";
 
 export default function Home() {
   const dispatch = useDispatch();
   const list = useSelector((state) => state.recipes);
-  const totalPages = list.length / 9;
-	const [ currentPage, setCurrentPage ] = useState(1)
+  const [page, setPage] = useState(1);
   const [recipes, setRecipes] = useState([]);
-
-  function handlePagination(currentPage) {
-		setCurrentPage(currentPage)
-    
-  }
-
-	useEffect(() => {
-		setRecipes(list.slice(currentPage - 1 * 9, currentPage * 8));
-	}, [currentPage, list])
+  const totalPages = Math.ceil(list.length / 9);
 
   useEffect(() => {
     dispatch(getRecipes());
   }, [dispatch]);
+
+  function handlePagination(currentPage) {
+    setPage(currentPage);
+  }
+
+  useEffect(() => {
+    setRecipes(list.slice((page - 1) * 9, page * 9));
+  }, [page, list]);
 
   return (
     <>
       <h1 className="title">Recetas</h1>
       <BodyContainer>
         <Filter />
-        <div>
-          <Pagination totalPages={totalPages} handle={handlePagination} />
-          <CardsList list={recipes} />
-          <Pagination totalPages={totalPages} handle={handlePagination} />
-        </div>
+        {!recipes.length ? (
+          <Loader />
+        ) : (
+          <div>
+            <Pagination
+              totalPages={totalPages}
+              currentPage={page}
+              handle={handlePagination}
+            />
+            <CardsList list={recipes} />
+            <Pagination
+              totalPages={totalPages}
+              currentPage={page}
+              handle={handlePagination}
+            />
+          </div>
+        )}
       </BodyContainer>
     </>
   );

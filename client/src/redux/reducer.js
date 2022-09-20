@@ -4,7 +4,6 @@ import {
   GET_DIETS,
   ORDER_BY,
   FILTER_BY_DIETS,
-  SEARCH_BY_NAME,
 } from "./actions";
 
 const initialState = {
@@ -21,11 +20,6 @@ export default function rootReducer(state = initialState, { type, payload }) {
         diets: [...payload],
       };
     case GET_RECIPES:
-      return {
-        ...state,
-        recipes: [...payload],
-      };
-    case SEARCH_BY_NAME:
       return {
         ...state,
         recipes: [...payload],
@@ -49,14 +43,12 @@ export default function rootReducer(state = initialState, { type, payload }) {
         recipes: [...newOrder],
       };
     case FILTER_BY_DIETS:
-      let filterCondition = (d) => payload.includes(d);
-      let getRecipes = state.recipes.filter((rcp) =>
-        rcp.diets.some(filterCondition)
-      );
+      const condition = diet => payload.includes(diet);
+      const search = state.recipes.filter(rcp => rcp.diets.some(diet => condition(diet)))
       return {
         ...state,
-        recipes: [...getRecipes],
-      };
+        recipes: [...search]
+      }
     case GET_DETAILS:
       return {
         ...state,

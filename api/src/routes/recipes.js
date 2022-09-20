@@ -38,10 +38,9 @@ router.post("/", async (req, res) => {
 
   const error = recipeDataValidation(recipe);
   error && res.status(400).send("Faltan datos requeridos");
-
   try {
     const newRecipe = await Recipe.create(recipe);
-    const searchDiets = await Diet.findAll({
+    const searchDiets = diets.length && await Diet.findAll({
       where: {
         name: {
           [Op.or]: diets.map((el) => el),

@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const CardContainer = styled.article`
   position: relative;
   width: 300px;
+  min-height: 400px;
   box-shadow: 0 0 7px 2px rgba(0, 0, 0, 0.4);
   border-radius: 10px;
   background-color: ${({ theme }) => theme.color.secondary};

@@ -22,6 +22,8 @@ export const ScoreNumber = styled.span`
 
 export const RecipeImg = styled.img`
   width: 500px;
+  border-radius: 20px;
+  border: 5px dashed black;
 `;
 
 export const DietsList = styled.ul`
@@ -29,6 +31,7 @@ export const DietsList = styled.ul`
   flex-direction: column;
   gap: 10px;
   list-style-type: none;
+  padding-top: 18px;
   padding-left: 18px;
 
 	li{
@@ -50,4 +53,11 @@ export const SecondSection = styled.section`
   }
 `;
 
-export const StepsList = styled(DietsList)``;
+export const StepsList = styled(DietsList)`
+  gap: 16px;
+  span{
+    border-radius: 50%;
+    padding: 8px 19px;
+    background-color: pink;
+  }
+`;
