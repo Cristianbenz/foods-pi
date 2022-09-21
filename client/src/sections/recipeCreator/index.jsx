@@ -1,24 +1,20 @@
-import { useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { addRecipe } from "../../redux/actions";
+import { formSchema, validations } from "./utils";
 
 import RecipeForm from "../../components/recipeForm";
 import Card from "../../components/card";
+import ToastContainer, { toast } from '../../components/notifications';
 
 import { CreateSection, DetailsContainer, Step } from "./styles";
 
 export default function RecipeCreator() {
-  const [formData, setFormData] = useState({
-    recipe: {
-      name: "",
-      image: "",
-      healthScore: 1,
-      summary: "",
-      steps: [],
-    },
-    diets: [],
-  });
-  const [steps, setStep] = useState([]);
+  const [formData, setFormData] = useState({...formSchema});
   const [error, setError] = useState({});
+  const [notifications, setNotifications] = useState([])
+  const dispatch = useDispatch()
 
   function onChange(e) {
     const target = e.target;
@@ -36,43 +32,7 @@ export default function RecipeCreator() {
     });
   }
 
-  useEffect(() => {
-    setError(validations(formData.recipe));
-  }, [formData]);
-
-  function validations(form) {
-    const errors = {};
-
-    if (!form.name) {
-      errors.name = "El nombre es un campo requerido.";
-    } else if (form.name.length < 4) {
-      errors.name = "El nombre debe tener minimo 4 caracteres.";
-    }
-
-    if (!form.summary) {
-      errors.summary = "El resumen es un campo requerido.";
-    }
-
-    if (form.healthScore < 0) {
-      setFormData((prevData) => {
-        return {
-          ...prevData,
-          healthScore: 0,
-        };
-      });
-    } else if (form.healthScore > 100) {
-      setFormData((prevData) => {
-        return {
-          ...prevData,
-          healthScore: 100,
-        };
-      });
-    }
-
-    return errors;
-  }
-
-  function dietsOptions(values) {
+  function handleDiets(values) {
     setFormData((prevData) => {
       return {
         ...prevData,
@@ -81,56 +41,43 @@ export default function RecipeCreator() {
     });
   }
 
-  function addSteps() {
-    setStep((prevSteps) => [...prevSteps, { id: uuidv4(), value: "" }]);
-  }
-
-  function changeStep(e) {
-    const fields = steps.map((stp) => {
-      if (e.target.id === stp.id) {
-        stp.value = e.target.value;
-      }
-      return stp;
-    });
-
+  function handleSteps(steps) {
     setFormData((prevInfo) => {
       return {
         ...prevInfo,
         recipe: {
           ...prevInfo.recipe,
-          steps: fields
+          steps: steps
         }
       };
     });
   }
 
-  function deleteStep(id) {
-    let newArr = steps.filter((stp) => stp.id !== id);
-    setStep(newArr);
-    setFormData((prevInfo) => {
-      return {
-        ...prevInfo,
-        recipe: {
-          ...prevInfo.recipe,
-          steps: newArr
-        }
-      };
-    });
-  }
+  function handleSubmit(e) {
+		e.preventDefault()
+    const errors = validations(formData.recipe);
+    setError(validations(formData.recipe))
+		if(Object.keys(errors) < 1) {
+			dispatch(addRecipe(formData))
+      setFormData({...formSchema})
+      toast('success', 'Receta creada correctamente', notifications, setNotifications)
+		} else {
+      toast('error', 'No se cumplen los requisitos', notifications, setNotifications)
+    }
+	}
 
   return (
     <>
+      <ToastContainer notifications={notifications} setNotifications={setNotifications} />
       <h1 className="title">¡Añade tu propia receta!</h1>
       <CreateSection>
         <RecipeForm
           data={formData}
           onChange={onChange}
           error={error}
-          dietsOptions={dietsOptions}
-          addSteps={addSteps}
-          changeStep={changeStep}
-          deleteStep={deleteStep}
-          steps={steps}
+          handleDiets={handleDiets}
+          handleSteps={handleSteps}
+          handleSubmit={handleSubmit}
         />
         <DetailsContainer>
           <Card

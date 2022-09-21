@@ -7,7 +7,10 @@ export const Container = styled.div`
   gap: 15px;
   padding: 30px 20px;
   font-size: 20px;
-  cursor: pointer;
+  
+  span {
+    cursor: pointer;
+  }
 `;
 
 export const NumsList = styled.ul`
@@ -15,3 +18,9 @@ export const NumsList = styled.ul`
   list-style-type: none;
   gap: 15px;
 `;
+
+export const Num = styled.li`
+  color: ${({active}) => active && 'red'};
+  font-weight: ${({active}) => active && 'bolder'};
+  cursor: pointer;
+`

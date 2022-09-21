@@ -1,36 +1,57 @@
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
+
+import { validations } from "../../sections/recipeCreator/utils";
 
 import DietsCheckbox from "../dietsCheckbox";
-
-import { addRecipe } from "../../redux/actions";
 
 import { Form, StepsContainer, TextArea, Button } from "./styles";
 
 export default function RecipeForm({
   data,
   onChange,
-  dietsOptions,
-  addSteps,
-	changeStep,
-  deleteStep,
-  steps,
+  handleDiets,
+  handleSteps,
+  handleSubmit,
   error,
 }) {
-	
-	const {name, image, healthScore, summary} = data.recipe
-	const dispatch = useDispatch()
+  const { name, image, healthScore, summary } = data.recipe;
+  const [steps, setSteps] = useState([]);
+  const [valid, setValid] = useState(false);
 
-	function submitForm(e) {
-		e.preventDefault()
-		if(Object.keys(error) < 1) {
-      console.log(data)
-			dispatch(addRecipe(data))
-		}
-	}
+  function addStepInput() {
+    setSteps((prevSteps) => [...prevSteps, { id: uuidv4(), value: "" }]);
+  }
+
+  function changeStep(e) {
+    const fields = steps.map((stp) => {
+      if (e.target.id === stp.id) {
+        stp.value = e.target.value;
+      }
+      return stp;
+    });
+    handleSteps(fields);
+  }
+
+  function deleteStep(id) {
+    let newArr = steps.filter((stp) => stp.id !== id);
+    setSteps(newArr);
+    handleSteps(newArr);
+  }
+
+  useEffect(() => {
+    const errors = validations(data.recipe);
+    !Object.keys(errors).length && setValid(true)
+  }, [data])
+
+  function submit(e) {
+    handleSubmit(e);
+    setSteps([]);
+  }
 
   return (
     <>
-      <Form onSubmit={submitForm}>
+      <Form onSubmit={submit}>
         <span>*Campos obligatorios</span>
         <label htmlFor="name">
           Nombre*:
@@ -41,15 +62,11 @@ export default function RecipeForm({
             value={name}
             onChange={onChange}
           />
+          {<span>{error.name ? error.name : '- Mínimo 4 caracteres.'}</span>}
         </label>
         <label htmlFor="image">
           Imagen:
-          <input
-            type="text"
-            name="image"
-            value={image}
-            onChange={onChange}
-          />
+          <input type="text" name="image" value={image} onChange={onChange} />
         </label>
         <label htmlFor="healthScore">
           Puntos de Saludable:
@@ -65,9 +82,13 @@ export default function RecipeForm({
         <label htmlFor="summary">
           Resumen*:
           <TextArea name="summary" value={summary} onChange={onChange} />
+          {error.summary && <span>{error.summary}</span>}
         </label>
         <StepsContainer>
-          <span>Pasos</span> <button type="button" onClick={addSteps}>+</button>
+          <span>Pasos</span>{" "}
+          <button type="button" onClick={addStepInput}>
+            +
+          </button>
           <ul>
             {steps.map((el) => {
               return (
@@ -78,14 +99,16 @@ export default function RecipeForm({
                     value={el.value}
                     onChange={changeStep}
                   />
-                  <button type='button' onClick={() => deleteStep(el.id)}>{"-"}</button>
+                  <button type="button" onClick={() => deleteStep(el.id)}>
+                    {"-"}
+                  </button>
                 </label>
               );
             })}
           </ul>
         </StepsContainer>
-        <DietsCheckbox cb={dietsOptions} />
-        {Object.keys(error) < 1 && <Button>Crear Receta</Button>}
+        <DietsCheckbox cb={handleDiets} />
+        {valid && <Button>Crear Receta</Button>}
       </Form>
     </>
   );

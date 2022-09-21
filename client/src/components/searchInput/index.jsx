@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { getRecipes } from '../../redux/actions';
+import { setLoading, getRecipes } from '../../redux/actions';
 
 import { Input } from "./styles";
 
@@ -19,6 +19,7 @@ export default function SearchInput() {
     if(location.search.includes('name')) {
       let getName = location.search?.split('&').find(el => el.includes('name'));
       let query = getName.split('=').at(-1);
+      dispatch(setLoading)
       dispatch(getRecipes(query))
     }
   }, [location.pathname, location.search,dispatch])

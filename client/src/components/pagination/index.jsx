@@ -1,4 +1,4 @@
-import { Container, NumsList } from "./styles";
+import { Container, NumsList, Num } from "./styles";
 
 export default function Pagination({ totalPages, currentPage, handle }) {
   const pages = [1]
@@ -21,15 +21,15 @@ export default function Pagination({ totalPages, currentPage, handle }) {
 
   return (
     <Container>
-      {currentPage > 1 && <span onClick={handleLess}>atras</span>}
+      {currentPage > 1 && <span onClick={handleLess}>Anterior</span>}
       <NumsList>
         {pages.map((num) => {
           return (
-            <li key={num} onClick={() => handleNum(num)} >{num}</li>
+            <Num active={currentPage === num} key={num} onClick={() => handleNum(num)} >{num}</Num>
           );
         })}
       </NumsList>
-      {currentPage < pages.length && <span onClick={handleMore}>adelante</span>}
+      {currentPage < pages.length && <span onClick={handleMore}>Siguiente</span>}
     </Container>
   );
 }

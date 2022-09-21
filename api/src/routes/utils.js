@@ -1,22 +1,25 @@
 const axios = require("axios");
 require("dotenv").config();
 const { Recipe, Diet } = require("../db");
+const data = require('./api.json')
 const { API_KEY } = process.env;
 const API = "https://api.spoonacular.com/";
 const LIST_URL = `${API}recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&limit=100`;
 async function preloadDiets() {
   const diets = [
     "Gluten Free",
+    "Dairy Free",
     "Ketogenic",
     "Vegetarian",
     "Lacto-Vegetarian",
     "Ovo-Vegetarian",
+    "Lacto Ovo Vegetarian",
     "Vegan",
     "Pescetarian",
-    "Paleo",
+    "Paleolithic",
     "Primal",
     "Low FODMAP",
-    "Whole30",
+    "Whole 30",
   ].map((el) => {
     return { name: el };
   });
@@ -26,9 +29,11 @@ async function preloadDiets() {
 
 async function getApiRecipes(flags) {
   try {
-    let get = await axios(LIST_URL);
-    let results = get.data.results;
+    // let get = await axios(LIST_URL);
+    // let results = get.data.results;
 
+    let results = data.results
+    
     if (flags.name && get.data) {
       results = get.data?.results.filter((recipe) => {
         return recipe.title.toLowerCase().includes(flags.name.toLowerCase());
@@ -89,7 +94,7 @@ async function getByIdAtApi(id) {
       name: recipe.title,
       healthScore: recipe.healthScore,
       diets: recipe.diets,
-      summary: recipe.summary,
+      summary: recipe.summary.replace(/<[^>]*>/g, ''),
       steps: recipe.analyzedInstructions[0].steps.map((el) => el.step),
     };
   } catch (error) {
