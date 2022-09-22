@@ -16,11 +16,14 @@ export const Container = styled.div`
 export const NumsList = styled.ul`
   display: flex;
   list-style-type: none;
-  gap: 15px;
+  gap: 12px;
+  width: 10ch;
+  overflow-x: hidden;
 `;
 
 export const Num = styled.li`
   color: ${({active}) => active && 'red'};
   font-weight: ${({active}) => active && 'bolder'};
   cursor: pointer;
+  transform: translateX(-${({position}) => position * 1.5}ch);
 `

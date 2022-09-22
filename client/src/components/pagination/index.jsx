@@ -25,7 +25,7 @@ export default function Pagination({ totalPages, currentPage, handle }) {
       <NumsList>
         {pages.map((num) => {
           return (
-            <Num active={currentPage === num} key={num} onClick={() => handleNum(num)} >{num}</Num>
+            <Num position={currentPage} active={currentPage === num} key={num} onClick={() => handleNum(num)} >{num}</Num>
           );
         })}
       </NumsList>

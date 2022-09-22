@@ -66,7 +66,7 @@ export default function RecipeDetails() {
                   return (
                     <li key={steps.indexOf(el)}>
                       <span>{steps.indexOf(el) + 1}</span>
-                      {JSON.parse(el).value || el}
+                      {el.value || el}
                     </li>
                   );
                 })}

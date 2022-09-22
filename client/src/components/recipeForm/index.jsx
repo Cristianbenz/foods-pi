@@ -20,7 +20,7 @@ export default function RecipeForm({
   const [valid, setValid] = useState(false);
 
   function addStepInput() {
-    setSteps((prevSteps) => [...prevSteps, { id: uuidv4(), value: "" }]);
+    setSteps((prevSteps) => [...prevSteps, { "id": uuidv4(), "value": "" }]);
   }
 
   function changeStep(e) {
