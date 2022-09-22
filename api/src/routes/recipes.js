@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
     }
     res.json(result);
   } catch (error) {
-    res.status(400);
+    res.status(400).send(error.message);
   }
 });
 
@@ -29,7 +29,7 @@ router.get("/:recetaId", async (req, res) => {
   } catch (error) {
     res
       .status(400)
-      .send(error);
+      .send(error.message);
   }
 });
 
@@ -48,6 +48,7 @@ router.post("/", async (req, res) => {
       },
       attributes: ["id"],
     });
+    
     newRecipe.addDiets(searchDiets);
 
     res.status(201).send("Receta creada correctamente!");

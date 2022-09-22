@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getDetails } from "../../redux/actions";
+import { getDetails, clearDetails } from "../../redux/actions";
 import imgPredeterminada from "../../assets/imgPredeterminada.png";
 
 import {
@@ -22,6 +22,10 @@ export default function RecipeDetails() {
 
   useEffect(() => {
     dispatch(getDetails(recipeId));
+
+    return () => {
+      dispatch(clearDetails);
+    }
   }, [dispatch, recipeId]);
 
   const { name, image, healthScore, diets, summary, steps } = details;

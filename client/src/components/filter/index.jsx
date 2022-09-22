@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux";
 import {
   setLoading,
-  getRecipes,
   sortRecipes,
   filterByDiets,
+  clearFilter
 } from "../../redux/actions";
 
 import DietsCheckbox from "../dietsCheckbox";
@@ -23,7 +23,7 @@ export default function Filter() {
 
   function handleDiets(values) {
     if (!values.length) {
-      dispatch(getRecipes());
+      dispatch(clearFilter);
     } else {
       dispatch(setLoading);
       dispatch(filterByDiets(values));

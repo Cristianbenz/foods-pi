@@ -11,6 +11,7 @@ import { BodyContainer } from "./styles";
 
 export default function Home() {
   const list = useSelector((state) => state.recipes);
+  const filter = useSelector((state) => state.filter);
   const isSearching = useSelector((state) => state.searching);
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -23,15 +24,21 @@ export default function Home() {
 
   useEffect(() => {
     setPage(1)
-  }, [list])
+  }, [list, filter])
 
   function handlePagination(currentPage) {
     setPage(currentPage);
   }
 
   useEffect(() => {
-    setRecipes(list.slice((page - 1) * 9, page * 9));
-  }, [page, list]);
+    if(filter.length && !filter[0]) {
+      setRecipes([])
+    } else if(filter.length) {
+      setRecipes(filter.slice((page - 1) * 9, page * 9))
+    } else {
+      setRecipes(list.slice((page - 1) * 9, page * 9));
+    }
+  }, [page, filter, list]);
 
   return (
     <>
@@ -42,7 +49,7 @@ export default function Home() {
           <Loader />
         ) : (
           <>
-            {!list.length ? (
+            {!recipes.length ? (
               <div>
                 <h2>No se encontraron recetas</h2>
               </div>

@@ -19,7 +19,12 @@ export default function RecipeCreator() {
   function onChange(e) {
     const target = e.target;
     const name = target.name;
-    const value = target.value;
+    let value = target.value;
+
+    if(name === 'healthScore') {
+      if(value < 0) value = 0
+      else if(value > 100) value = 100
+    }
 
     setFormData((prevData) => {
       return {
@@ -56,7 +61,7 @@ export default function RecipeCreator() {
   function handleSubmit(e) {
 		e.preventDefault()
     const errors = validations(formData.recipe);
-    setError(validations(formData.recipe))
+    setError(errors)
 		if(Object.keys(errors) < 1) {
 			dispatch(addRecipe(formData))
       setFormData({...formSchema})

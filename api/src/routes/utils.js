@@ -1,10 +1,10 @@
 const axios = require("axios");
 require("dotenv").config();
-const { Recipe, Diet } = require("../db");
-const data = require('./api.json')
-const { API_KEY } = process.env;
+const { Recipe, Diet, Op } = require("../db");
+// const { API_KEY } = process.env;
+let API_KEY = 'a01df81e4c344a51aeee77c5dba8f48d'
 const API = "https://api.spoonacular.com/";
-const LIST_URL = `${API}recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&limit=100`;
+const LIST_URL = `${API}recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`;
 async function preloadDiets() {
   const diets = [
     "Gluten Free",
@@ -29,10 +29,8 @@ async function preloadDiets() {
 
 async function getApiRecipes(flags) {
   try {
-    // let get = await axios(LIST_URL);
-    // let results = get.data.results;
-
-    let results = data.results
+    let get = await axios(LIST_URL);
+    let results = get.data.results;
     
     if (flags.name && get.data) {
       results = get.data?.results.filter((recipe) => {
@@ -51,12 +49,14 @@ async function getApiRecipes(flags) {
         };
       });
   } catch (error) {
-      return undefined;
+      return [];
   }
 }
 
 async function getDbRecipes(flags) {
-  let where = flags.name && { name: flags.name };
+  let where = flags.name && { name: {
+    [Op.substring]: flags.name
+  } };
 
   let options = {
     where,
@@ -68,7 +68,7 @@ async function getDbRecipes(flags) {
     let results = await Recipe.findAll(options);
     return results;
   } catch (error) {
-    return;
+    return [];
   }
 }
 

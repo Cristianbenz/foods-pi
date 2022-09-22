@@ -11,7 +11,7 @@ export default function Card({ id, name='Anonimo', image, diets=[], healthScore=
 			<InfoContainer>
 				<DietsList>
 					{
-						diets.map(el => <li key={diets.indexOf(el) + 1}>{el}</li>)
+						diets.map(el => <li key={diets.indexOf(el) + 1}>{el.toLowerCase()}</li>)
 					}
 				</DietsList>
 				<h3>{name}</h3>

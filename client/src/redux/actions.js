@@ -4,7 +4,9 @@ export const SET_LOADING = "SET_LOADING";
 export const GET_RECIPES = "GET_RECIPES";
 export const ORDER_BY = "ORDER_BY";
 export const FILTER_BY_DIETS = "FILTER_BY_RECIPE";
+export const CLEAR_FILTER = "CLEAR_FILTER"
 export const GET_DETAILS = "GET_DETAILS";
+export const CLEAR_DETAILS = "GET_DETAILS";
 export const ADD_RECIPE = "ADD_RECIPE";
 export const GET_DIETS = "GET_DIETS";
 
@@ -22,7 +24,7 @@ export function getRecipes(name) {
         payload: recipes.data,
       });
     } catch (error) {
-      throw Error(error);
+      return error.message;
     }
   };
 }
@@ -32,7 +34,7 @@ export function addRecipe(recipe) {
     try {
       await axios.post(`${api}recipes`, recipe);
     } catch (error) {
-      throw Error(error);
+      return error.message;
     }
   };
 }
@@ -46,10 +48,12 @@ export function getDetails(id) {
         payload: recipe.data,
       });
     } catch (error) {
-      throw Error(error);
+      return error.message;
     }
   };
 }
+
+export const clearDetails = {type: CLEAR_DETAILS}
 
 export function getDiets() {
   return async (dispatch) => {
@@ -60,7 +64,7 @@ export function getDiets() {
         payload: diets.data,
       });
     } catch (error) {
-      throw Error(error);
+      return error.message;
     }
   };
 }
@@ -79,3 +83,5 @@ export function filterByDiets(diets) {
     payload: [...parsedDiets],
   };
 }
+
+export const clearFilter = {type: CLEAR_FILTER}

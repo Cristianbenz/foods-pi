@@ -9,7 +9,7 @@ export const formSchema = {
   diets: [],
 };
 
-export function validations(form, setFormData) {
+export function validations(form) {
   const errors = {};
 
   if (!form.name) {
@@ -20,22 +20,6 @@ export function validations(form, setFormData) {
 
   if (!form.summary) {
     errors.summary = "El resumen es un campo requerido.";
-  }
-
-  if (form.healthScore < 0) {
-    setFormData((prevData) => {
-      return {
-        ...prevData,
-        healthScore: 0,
-      };
-    });
-  } else if (form.healthScore > 100) {
-    setFormData((prevData) => {
-      return {
-        ...prevData,
-        healthScore: 100,
-      };
-    });
   }
 
   return errors;

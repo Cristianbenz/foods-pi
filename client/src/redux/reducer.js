@@ -1,17 +1,20 @@
 import {
   SET_LOADING,
   GET_DETAILS,
+  CLEAR_DETAILS,
   GET_RECIPES,
   GET_DIETS,
   ORDER_BY,
   FILTER_BY_DIETS,
+  CLEAR_FILTER,
 } from "./actions";
 
 const initialState = {
   recipes: [],
+  filter: [],
   details: {},
   diets: [],
-  searching: true
+  searching: true,
 };
 
 export default function rootReducer(state = initialState, { type, payload }) {
@@ -19,8 +22,8 @@ export default function rootReducer(state = initialState, { type, payload }) {
     case SET_LOADING:
       return {
         ...state,
-        searching: true
-      }
+        searching: true,
+      };
     case GET_DIETS:
       return {
         ...state,
@@ -30,7 +33,7 @@ export default function rootReducer(state = initialState, { type, payload }) {
       return {
         ...state,
         recipes: [...payload],
-        searching: false
+        searching: false,
       };
     case ORDER_BY:
       let dir =
@@ -45,25 +48,43 @@ export default function rootReducer(state = initialState, { type, payload }) {
               if (a[payload.sort] < b[payload.sort]) return -1;
               return 0;
             };
-      let newOrder = state.recipes.sort(dir);
+      let newOrder = !state.filter.length
+        ? state.recipes.sort(dir)
+        : state.filter.sort(dir);
       return {
         ...state,
-        recipes: [...newOrder],
-        searching: false
+        filter: [...newOrder],
+        searching: false,
       };
     case FILTER_BY_DIETS:
-      const condition = diet => payload.includes(diet);
-      const search = state.recipes.filter(rcp => rcp.diets.some(diet => condition(diet)))
+      const condition = (diet) => {
+        const name = diet.name || diet
+        return payload.includes(name.toLowerCase());
+      };
+      const search = state.recipes.filter((rcp) =>
+        rcp.diets.some((diet) => condition(diet))
+      );
+      const result = !search.length ? [undefined] : search;
       return {
         ...state,
-        recipes: [...search],
-        searching: false
-      }
+        filter: result,
+        searching: false,
+      };
+    case CLEAR_FILTER:
+      return {
+        ...state,
+        filter: [],
+      };
     case GET_DETAILS:
       return {
         ...state,
         details: { ...payload },
-        searching: false
+        searching: false,
+      };
+    case CLEAR_DETAILS:
+      return {
+        ...state,
+        details: {},
       };
     default:
       return { ...state };
