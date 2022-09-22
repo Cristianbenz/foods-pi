@@ -29,7 +29,7 @@ module.exports = (sequelize) => {
       }
     },
     steps: {
-      type: DataTypes.ARRAY(DataTypes.STRING)
+      type: DataTypes.ARRAY(DataTypes.JSON)
     }
   });
 };

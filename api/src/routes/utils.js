@@ -1,8 +1,7 @@
 const axios = require("axios");
 require("dotenv").config();
 const { Recipe, Diet, Op } = require("../db");
-// const { API_KEY } = process.env;
-let API_KEY = 'a01df81e4c344a51aeee77c5dba8f48d'
+const { API_KEY } = process.env;
 const API = "https://api.spoonacular.com/";
 const LIST_URL = `${API}recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`;
 async function preloadDiets() {
@@ -86,7 +85,7 @@ async function getRecipeList(flags) {
 async function getByIdAtApi(id) {
   try {
     let response = await axios(
-      `${API}recipes/${id}/information?includeNutrition=false&apiKey=aa744f5fc8b64f3391f874517678699d`
+      `${API}recipes/${id}/information?includeNutrition=false&apiKey=${API_KEY}`
     );
     let recipe = response.data;
     return {
