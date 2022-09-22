@@ -22,11 +22,11 @@ const { conn } = require('./src/db.js');
 const { preloadDiets } = require('./src/routes/utils');
 require('dotenv').config();
 
-const PORT = process.env.PORT
+const { PORT } = require('./src/config')
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(preloadDiets).then(() => {
   server.listen(PORT, () => {
-    console.log(`listening at ${PORT}`); // eslint-disable-line no-console
+    console.log(`%s listening at ${PORT}`); // eslint-disable-line no-console
   });
 });
