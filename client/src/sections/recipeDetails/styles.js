@@ -1,5 +1,19 @@
 import styled from "styled-components";
 
+export const LoaderContainer = styled.div`
+  width: 100vw;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  img{
+    width: 400px;
+    height: auto;
+  }
+`
+
 export const FirstSection = styled.section`
   display: flex;
   gap: 40px;

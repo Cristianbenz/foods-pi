@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import loader from '../../assets/detailLoader.gif'
 
-import { getDetails, clearDetails } from "../../redux/actions";
+import { getDetails, setLoading, clearDetails } from "../../redux/actions";
 import imgPredeterminada from "../../assets/imgPredeterminada.png";
 
 import {
+  LoaderContainer,
   FirstSection,
   RecipeImg,
   ScoreNumber,
@@ -21,6 +23,7 @@ export default function RecipeDetails() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(setLoading)
     dispatch(getDetails(recipeId));
 
     return () => {
@@ -30,9 +33,9 @@ export default function RecipeDetails() {
 
   const { name, image, healthScore, diets, summary, steps } = details;
   return loading ? (
-    <div>
-      <h1>CARGANDO...</h1>
-    </div>
+    <LoaderContainer>
+      <img src={loader} alt="Cargando..." />
+    </LoaderContainer>
   ) : (
     <>
       {!Object.keys(details).length ? (

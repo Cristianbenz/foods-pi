@@ -104,7 +104,6 @@ async function getByIdAtApi(id) {
 async function getByPkDb(id) {
   try {
     let recipe = await Recipe.findByPk(id, {include: Diet});
-    console.log(recipe)
     return recipe;
   } catch (e) {
     return undefined;
