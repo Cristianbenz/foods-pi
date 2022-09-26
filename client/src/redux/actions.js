@@ -1,4 +1,6 @@
 import axios from "axios";
+import dotenv from 'dotenv'
+dotenv.config()
 
 export const SET_LOADING = "SET_LOADING";
 export const GET_RECIPES = "GET_RECIPES";
@@ -10,7 +12,7 @@ export const CLEAR_DETAILS = "GET_DETAILS";
 export const ADD_RECIPE = "ADD_RECIPE";
 export const GET_DIETS = "GET_DIETS";
 
-let api = "http://localhost:3001/";
+let api = process.env.API || "http://localhost:3001/";
 
 export const setLoading = {type: SET_LOADING}
 
