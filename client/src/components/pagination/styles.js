@@ -8,15 +8,16 @@ export const Container = styled.div`
   gap: 15px;
   padding: 30px 20px;
   font-size: 20px;
-
-  span {
-    cursor: pointer;
-  }
 `;
 
 export const NumBox = styled.input`
   width: 30px;
-  text-aling: center;
   border: 1px solid black;
   padding: 6px;
+  text-align: center;
 `;
+
+export const Arrow = styled.i`
+  cursor: ${({ disabled }) => !disabled ? 'pointer' : 'not-allowed'};
+  opacity: ${({ disabled }) => !disabled ? 1 : 0.5}
+`

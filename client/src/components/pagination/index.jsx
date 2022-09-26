@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Container, NumBox } from "./styles";
+import { Container, NumBox, Arrow } from "./styles";
 
 export default function Pagination({ totalPages, currentPage, handle }) {
   const pages = [1]
@@ -41,10 +41,10 @@ export default function Pagination({ totalPages, currentPage, handle }) {
 
   return (
     <Container>
-      {currentPage > 1 && <span onClick={handleLess}>Anterior</span>}
+      <Arrow className='bx bxs-left-arrow' disabled={currentPage === 1} onClick={handleLess} />
         <NumBox value={input} type='text' onChange={onChange} onKeyDown={onKeyDown} />
         <p>de {totalPages}</p>
-      {currentPage < pages.length && <span onClick={handleMore}>Siguiente</span>}
+      <Arrow className='bx bxs-right-arrow' disabled={currentPage === totalPages} onClick={handleMore} />
     </Container>
   );
 }

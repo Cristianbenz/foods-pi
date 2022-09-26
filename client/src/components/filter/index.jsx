@@ -1,9 +1,10 @@
+import { useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
   setLoading,
   sortRecipes,
   filterByDiets,
-  clearFilter
+  clearFilter,
 } from "../../redux/actions";
 
 import DietsCheckbox from "../dietsCheckbox";
@@ -12,11 +13,10 @@ import { FilterContainer, FilterForm } from "./styles";
 
 export default function Filter() {
   const dispatch = useDispatch();
+  const select = useRef();
+  const { sort, sortDirection } = JSON.parse(select.current.value);
 
-  function handleSelect(e) {
-    let option = e.target;
-    if (!option.value) return;
-    let { sort, sortDirection } = JSON.parse(option.value);
+  function handleSelect() {
     dispatch(setLoading);
     dispatch(sortRecipes(sort, sortDirection));
   }
@@ -24,10 +24,12 @@ export default function Filter() {
   function handleDiets(values) {
     if (!values.length) {
       dispatch(clearFilter);
-    } else {
-      dispatch(setLoading);
-      dispatch(filterByDiets(values));
+      return dispatch(sortRecipes(sort, sortDirection))
     }
+    
+    dispatch(setLoading);
+    dispatch(filterByDiets(values));
+    dispatch(sortRecipes(sort, sortDirection));
   }
 
   return (
@@ -35,8 +37,14 @@ export default function Filter() {
       <FilterForm>
         <label>
           Ordenar por:
-          <select onChange={handleSelect}>
-            <option></option>
+          <select
+            ref={select}
+            onChange={handleSelect}
+            defaultValue={JSON.stringify({
+              sort: "name",
+              sortDirection: "ASC",
+            })}
+          >
             <option
               value={JSON.stringify({ sort: "name", sortDirection: "ASC" })}
             >
