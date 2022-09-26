@@ -30,13 +30,17 @@ export default function Pagination({ totalPages, currentPage, handle }) {
   }
 
   function handleLess() {
-    setInpunt(prev => prev - 1)
-    handle(currentPage - 1)
+    if(currentPage !== 1) {
+      setInpunt(prev => prev - 1)
+      handle(currentPage - 1)
+    }
   }
   
   function handleMore() {
-    setInpunt(prev => prev + 1)
-    handle(currentPage + 1)
+    if(currentPage !== totalPages) {
+      setInpunt(prev => prev + 1)
+      handle(currentPage + 1)
+    }
   }
 
   return (

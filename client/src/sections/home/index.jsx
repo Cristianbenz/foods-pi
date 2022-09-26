@@ -17,7 +17,7 @@ export default function Home() {
   const [recipes, setRecipes] = useState([]);
 
   const dispatch = useDispatch();
-  const totalPages = Math.ceil(list.length / 9);
+  const totalPages = Math.ceil((filter.length || list.length) / 9);
 
   useEffect(() => {
     dispatch(getRecipes());
