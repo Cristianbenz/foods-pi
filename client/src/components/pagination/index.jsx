@@ -4,7 +4,7 @@ import { Container, NumBox, Arrow } from "./styles";
 
 export default function Pagination({ totalPages, currentPage, handle }) {
   const pages = [1]
-  const [input, setInpunt] = useState(1)
+  const [input, setInpunt] = useState(currentPage)
 
   for (let i = 2; i <= totalPages; i++) {
     pages.push(i);
