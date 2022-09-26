@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { Container, NumBox } from "./styles";
 
@@ -10,24 +10,20 @@ export default function Pagination({ totalPages, currentPage, handle }) {
     pages.push(i);
   }
 
-  useEffect(() => {
-    const regexp = /[0-9]/
-
-    if(!regexp.test(input) || parseInt(input) < 1) {
-      handle(1)
-    } else if(parseInt(input) > totalPages) {
-      handle(totalPages)
-    } else {
-      handle(parseInt(input))
+  function onKeyDown(e) {
+    if(e.key === 'Enter') {
+      const regexp = /[0-9]/
+      if(!regexp.test(input) || parseInt(input) < 1) {
+        setInpunt(1)
+        handle(1)
+      } else if(parseInt(input) > totalPages) {
+        setInpunt(totalPages)
+        handle(totalPages)
+      } else {
+        handle(parseInt(input))
+      }
     }
-
-  },[input, totalPages, handle])
-
-  // function onKeyDown(e) {
-  //   if(e.key === 'Enter') {
-  //     if(/[0-9]/.test(input))
-  //   }
-  // }
+  }
 
   function onChange(e) {
     setInpunt(e.target.value)
@@ -46,7 +42,7 @@ export default function Pagination({ totalPages, currentPage, handle }) {
   return (
     <Container>
       {currentPage > 1 && <span onClick={handleLess}>Anterior</span>}
-        <NumBox value={input} type='text' onChange={onChange} />
+        <NumBox value={input} type='text' onChange={onChange} onKeyDown={onKeyDown} />
         <p>de {totalPages}</p>
       {currentPage < pages.length && <span onClick={handleMore}>Siguiente</span>}
     </Container>
