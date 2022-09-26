@@ -17,8 +17,9 @@ export const LeftContainer = styled.div`
 `;
 
 export const HeaderTitle = styled.h1`
-  font-size: 250px;
+  font-size: 160px;
   font-weight: bolder;
+  padding-bottom: 50px;
   text-align: center;
 `;
 

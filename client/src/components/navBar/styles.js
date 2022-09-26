@@ -2,14 +2,18 @@ import styled from "styled-components";
 
 export const Header = styled.header`
 	position: sticky;
-	top: 1px;
+	top: 0px;
 	z-index: 999;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 20px 40px;
-	backdrop-filter: blur(2px);
-	background-color: #f8a8904c
+	padding: 9px 40px;
+	background-color: ${({theme}) => theme.color.secondary};
+`
+
+export const Logo = styled.img`
+	width: 150px;
+	height: auto;
 `
 
 export const Menu = styled.ul`
@@ -19,7 +23,6 @@ export const Menu = styled.ul`
 	
 	a {
 		text-decoration: none;
-		color: ${({ theme }) => theme.color.fontColor};
 		font-weight: bolder;
 		font-size: 20px;
 	}

@@ -1,8 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
 
+import logo from '../../assets/logo.png'
+
 import SearchInput from "../searchInput";
 
-import { Header, Menu } from "./styles";
+import { Header, Menu, Logo } from "./styles";
 
 export default function NavBar() {
   const { pathname } = useLocation()
@@ -11,7 +13,7 @@ export default function NavBar() {
   return (
     <Header>
       <Link to='/home'>
-        <img src={"logo"} alt="Logo" />
+        <Logo src={logo} alt="Logo" />
       </Link>
       <SearchInput />
       <nav>

@@ -18,26 +18,30 @@ export const FirstSection = styled.section`
   display: flex;
   gap: 40px;
   padding: 30px;
-  font-size: 27px;
+  font-size: 24px;
 
   h1 {
-    font-size: 65px;
+    font-size: 54px;
+    font-style: italic;
+    padding-bottom: 17px;
   }
 
 	h2 {
-		font-size: 34px;
-		font-weight: bolder;
+		font-size: 30px;
+    font-weight: bolder;
+    font-style: italic;
+    padding: 10px 0px;
 	}
 `;
 
 export const ScoreNumber = styled.span`
-	font-size: 27px;
+	font-size: 24px;
 `
 
 export const RecipeImg = styled.img`
   width: 500px;
-  border-radius: 20px;
-  border: 5px dashed black;
+  height: auto;
+  border: 8px solid ${({theme}) => theme.color.secondary};
 `;
 
 export const DietsList = styled.ul`
@@ -57,6 +61,7 @@ export const DietsList = styled.ul`
 
 export const SecondSection = styled.section`
   display: flex;
+  width: 90%;
   flex-direction: column;
   gap: 30px;
   padding: 25px;
@@ -64,14 +69,28 @@ export const SecondSection = styled.section`
 
   h2 {
     font-size: 42px;
+    font-style: italic;
+    border-bottom: 2px solid black;
+    margin-bottom: 19px;
+  }
+
+  p {
+    line-height: 50px;
   }
 `;
 
 export const StepsList = styled(DietsList)`
   gap: 16px;
+  
+  li{
+    line-height: 50px;
+    align-items: flex-start;
+  }
+
   span{
+    font-size: 20px;
     border-radius: 50%;
-    padding: 8px 19px;
-    background-color: pink;
+    padding: 2px 20px;
+    background-color: ${({theme}) => theme.color.secondary};
   }
 `;

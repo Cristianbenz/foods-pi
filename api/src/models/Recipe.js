@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique: 'combined-index',
       validate: {
-        [Op.regexp]: '[a-zA-Z\s,]' 
+        [Op.regexp]: '^([a-zA-z\s,]+)$' 
       }
     },
     image: {
@@ -26,7 +26,7 @@ module.exports = (sequelize) => {
       allowNull: false,
       unique: 'combined-index',
       validate: {
-        [Op.regexp]: '[a-zA-Z\s,.]'
+        [Op.regexp]: '^([a-zA-z0-9\s,.]+)$'
       }
     },
     healthScore: {

@@ -2,18 +2,22 @@ import styled from "styled-components";
 
 export const CardContainer = styled.article`
   position: relative;
-  width: 300px;
-  min-height: 400px;
+  width: 320px;
+  height: 100%;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   box-shadow: 0 0 7px 2px rgba(0, 0, 0, 0.4);
-  border-radius: 10px;
   background-color: ${({ theme }) => theme.color.secondary};
-  color: ${({ theme }) => theme.color.fontColor};
   overflow: hidden;
 
   h3 {
     font-size: 30px;
     font-weight: bolder;
     margin: 10px auto;
+  }
+
+  img{
+    height: 260px;
   }
 `;
 
@@ -39,7 +43,6 @@ export const DietsList = styled.ul`
   gap: 5px;
 
   li {
-    border-radius: 10px;
     padding: 5px 12px;
     background-color: ${({ theme }) => theme.color.primary};
   }

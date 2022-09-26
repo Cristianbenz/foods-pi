@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { addRecipe } from "../../redux/actions";
@@ -26,6 +26,15 @@ export default function RecipeCreator() {
       else if(value > 100) value = 100
     }
 
+    if(name === 'image') {
+      const file = target.files[0];
+      if(!/([^\\s]+(\.png|jpeg|jpe))/.test(file.name)) {
+        return setError(prev => ({...prev, imageWrong: true }))
+      }
+      const path = URL.createObjectURL(file);
+      value = path
+    }
+
     setFormData((prevData) => {
       return {
         ...prevData,
@@ -36,6 +45,11 @@ export default function RecipeCreator() {
       };
     });
   }
+
+  useEffect(() => {
+    const errors = validations(formData.recipe);
+    setError(errors)
+  }, [formData])
 
   function handleDiets(values) {
     setFormData((prevData) => {
@@ -60,9 +74,7 @@ export default function RecipeCreator() {
 
   function handleSubmit(e) {
 		e.preventDefault()
-    const errors = validations(formData.recipe);
-    setError(errors)
-		if(Object.keys(errors) < 1) {
+		if(Object.keys(error) < 1) {
 			dispatch(addRecipe(formData))
       setFormData({...formSchema})
       toast('success', 'Receta creada correctamente', notifications, setNotifications)

@@ -1,16 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@0;1&display=swap');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Londrina Solid', cursive;
+  font-family: 'Libre Baskerville', serif;
+  color: #213343;
   font-weight: 100;
 }
 
 .title {
   text-align: center;
-  font-weight: 300;
+  font-style: italic;
   font-size: 78px;
   padding: 20px;
 }
@@ -23,7 +24,7 @@ img {
 }
 
 html, #root, body {
-  background-color: #ffe6cb;
+  background-color: #f8a990;
   overflow-x: hidden;
   min-height: 100vh;
 }

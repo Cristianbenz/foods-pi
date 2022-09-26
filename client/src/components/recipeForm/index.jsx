@@ -5,7 +5,7 @@ import { validations } from "../../sections/recipeCreator/utils";
 
 import DietsCheckbox from "../dietsCheckbox";
 
-import { Form, StepsContainer, TextArea, Button } from "./styles";
+import { Form, InputImageStyle, Requirements, StepsContainer, TextArea, Button } from "./styles";
 
 export default function RecipeForm({
   data,
@@ -20,7 +20,7 @@ export default function RecipeForm({
   const [valid, setValid] = useState(false);
 
   function addStepInput() {
-    setSteps((prevSteps) => [...prevSteps, { "id": uuidv4(), "value": "" }]);
+    setSteps((prevSteps) => [...prevSteps, { id: uuidv4(), value: "" }]);
   }
 
   function changeStep(e) {
@@ -41,8 +41,8 @@ export default function RecipeForm({
 
   useEffect(() => {
     const errors = validations(data.recipe);
-    !Object.keys(errors).length && setValid(true)
-  }, [data])
+    !Object.keys(errors).length && setValid(true);
+  }, [data]);
 
   function submit(e) {
     handleSubmit(e);
@@ -52,9 +52,8 @@ export default function RecipeForm({
   return (
     <>
       <Form onSubmit={submit}>
-        <span>*Campos obligatorios</span>
         <label htmlFor="name">
-          Nombre*:
+          Nombre:
           <input
             type="text"
             minLength={"4"}
@@ -62,11 +61,42 @@ export default function RecipeForm({
             value={name}
             onChange={onChange}
           />
-          {<span>{error.name ? error.name : '- Mínimo 4 caracteres.'}</span>}
+          <Requirements>
+            <li>
+            <span>{error.nameRequired ? '❕': '✅'}</span>
+              El nombre es obligatorio.
+            </li>
+            <li>
+            <span>{error.nameMin ? '❕': '✅'}</span>
+              Mínimo 4 caracteres.
+            </li>
+            <li>
+            <span>{error.nameWrong ? '❕': '✅'}</span>
+              Sin caracteres especiales.
+            </li>
+          </Requirements>
         </label>
         <label htmlFor="image">
           Imagen:
-          <input type="text" name="image" value={image} onChange={onChange} />
+          <InputImageStyle>
+            <span>
+              {!image.length 
+                ? 'Selecciona un archivo'
+                : '✅Archivo cargado'
+              }
+            </span>
+            <input type={'file'} name='image' onChange={onChange} />
+          </InputImageStyle>
+          {
+            image.length
+              ? (
+                <div>
+                  <span>{error.imageWrong ? '❕': '✅'}</span>
+                  El formato debe ser jpe/g o png
+                </div>
+              )
+              : null
+          }
         </label>
         <label htmlFor="healthScore">
           Puntos de Saludable:
@@ -80,9 +110,22 @@ export default function RecipeForm({
           />
         </label>
         <label htmlFor="summary">
-          Resumen*:
+          Resumen:
           <TextArea name="summary" value={summary} onChange={onChange} />
-          {error.summary && <span>{error.summary}</span>}
+          <Requirements>
+            <li>
+              <span>{error.summaryRequired ? '❕': '✅'}</span>
+              El resumen es obligatorio.
+            </li>
+            <li>
+              <span>{error.summaryMin ? '❕': '✅'}</span>
+              Minimo 80 caracteres.
+            </li>
+            <li>
+              <span>{error.summaryWrong ? '❕': '✅'}</span>
+              Sin caracteres especiales.
+            </li>
+          </Requirements>
         </label>
         <StepsContainer>
           <span>Pasos</span>{" "}

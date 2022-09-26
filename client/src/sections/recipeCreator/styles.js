@@ -11,8 +11,14 @@ export const CreateSection = styled.section`
 export const DetailsContainer = styled.div`
 	display: flex;
 	flex-direction: column;
+	width: 400px;
 	padding: 20px 50px;
 	font-size: 30px;
+
+	p, li {
+		inline-size: 400px;
+		word-break: break-all;
+	}
 
 	> div h3 {
 		font-size: 50px;
@@ -25,13 +31,15 @@ export const DetailsContainer = styled.div`
 	> div ul {
 		list-style-type: none;
 	}
-
-	> div ul li{
-		display: flex;
-		gap: 12px;
-	}
 `
 
 export const Step = styled.li`
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
 	font-size: 30px;
+
+	span{
+		word-break: normal;
+	}
 `

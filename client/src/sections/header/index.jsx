@@ -15,7 +15,7 @@ export default function Header() {
   return (
     <HeaderContainer>
       <LeftContainer>
-        <HeaderTitle>Henry Foods</HeaderTitle>
+        <HeaderTitle>Recetas Linguini</HeaderTitle>
         <CtaContainer to="/home">
           <StyledCta>¡Mira las Recetas!</StyledCta>
         </CtaContainer>
