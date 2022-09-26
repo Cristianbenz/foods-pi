@@ -1,5 +1,4 @@
 const axios = require("axios");
-require("dotenv").config();
 const { Recipe, Diet, Op } = require("../db");
 const { API_KEY } = process.env;
 const API = "https://api.spoonacular.com/";
