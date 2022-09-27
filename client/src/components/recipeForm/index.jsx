@@ -83,7 +83,7 @@ export default function RecipeForm({
           </Requirements>
         </label>
         <label htmlFor="image">
-          Imagen:
+          Link de imagen:
           <input name='image' type="text" value={image} onChange={onChange} />
           {image.length  
             ? <div>
@@ -123,22 +123,19 @@ export default function RecipeForm({
         </label>
         <StepsContainer>
           <span>Pasos</span>{" "}
-          <button type="button" onClick={addStepInput}>
-            +
-          </button>
+          <button type="button" onClick={addStepInput}>+</button>
           <ul>
             {steps.map((el) => {
               return (
                 <label key={el.id}>
                   <input
+                    autoFocus={true}
                     type="text"
                     id={el.id}
                     value={el.value}
                     onChange={changeStep}
                   />
-                  <button type="button" onClick={() => deleteStep(el.id)}>
-                    {"-"}
-                  </button>
+                  <button type="button" onClick={() => deleteStep(el.id)}>-</button>
                 </label>
               );
             })}

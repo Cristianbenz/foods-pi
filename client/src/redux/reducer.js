@@ -53,8 +53,7 @@ export default function rootReducer(state = initialState, { type, payload }) {
         : state.filter.sort(dir);
       return {
         ...state,
-        filter: [...newOrder],
-        searching: false,
+        filter: [...newOrder]
       };
     case FILTER_BY_DIETS:
       const condition = (diet) => {

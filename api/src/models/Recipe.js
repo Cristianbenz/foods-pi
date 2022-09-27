@@ -13,18 +13,21 @@ module.exports = (sequelize) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: 'combined-index',
+      unique: 'compositeIndex',
       validate: {
         [Op.regexp]: '^([a-zA-z\s,]+)$' 
       }
     },
     image: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        [Op.regexp]: '^(http|https):.*(jpg|jpeg|jpe)$'
+      }
     },
     summary: {
       type: DataTypes.TEXT,
       allowNull: false,
-      unique: 'combined-index',
+      unique: 'compositeIndex',
       validate: {
         [Op.regexp]: '^([a-zA-z0-9\s,.]+)$'
       }

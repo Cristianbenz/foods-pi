@@ -66,9 +66,13 @@ export default function RecipeCreator() {
   function handleSubmit(e) {
 		e.preventDefault()
 		if(Object.keys(error) < 1) {
-			dispatch(addRecipe(formData))
-      setFormData({...formSchema})
-      toast('success', 'Receta creada correctamente', notifications, setNotifications)
+      try {
+        dispatch(addRecipe(formData))
+        setFormData({...formSchema})
+        toast('success', 'Receta creada correctamente', notifications, setNotifications)
+      } catch (error) {
+          toast('error', 'Ya existe esta receta', notifications, setNotifications)
+      }
 		} else {
       toast('error', 'No se cumplen los requisitos', notifications, setNotifications)
     }

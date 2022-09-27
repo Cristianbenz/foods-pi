@@ -24,7 +24,7 @@ export function getRecipes(name) {
         payload: recipes.data,
       });
     } catch (error) {
-      return error.message;
+      return Error(error.message);
     }
   };
 }
@@ -34,7 +34,7 @@ export function addRecipe(recipe) {
     try {
       await axios.post(`${api}recipes`, recipe);
     } catch (error) {
-      return error.message;
+      return Error(error.message);
     }
   };
 }
@@ -48,7 +48,7 @@ export function getDetails(id) {
         payload: recipe.data,
       });
     } catch (error) {
-      return error.message;
+      return Error(error.message);
     }
   };
 }
@@ -64,7 +64,7 @@ export function getDiets() {
         payload: diets.data,
       });
     } catch (error) {
-      return error.message;
+      return Error(error.message);
     }
   };
 }

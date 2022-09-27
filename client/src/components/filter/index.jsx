@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setLoading,
   sortRecipes,
@@ -12,15 +12,18 @@ import DietsCheckbox from "../dietsCheckbox";
 import { FilterContainer, FilterForm } from "./styles";
 
 export default function Filter() {
+  const recipes = useSelector(state => state.recipes)
   const [ order, setOrder ] = useState(JSON.stringify({ sort: "name", sortDirection: "ASC" }))
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const { sort, sortDirection } = JSON.parse(order);
+    dispatch(sortRecipes(sort, sortDirection));
+  }, [recipes, dispatch, order])
+
   function handleSelect(e) {
     const value = e.target.value
-    const { sort, sortDirection } = JSON.parse(value);
     setOrder(value)
-    dispatch(setLoading);
-    dispatch(sortRecipes(sort, sortDirection));
   }
 
   function handleDiets(values) {
@@ -38,7 +41,7 @@ export default function Filter() {
 
   return (
     <FilterContainer>
-      <FilterForm>
+      <FilterForm autoComplete="off">
         <label>
           Ordenar por:
           <select

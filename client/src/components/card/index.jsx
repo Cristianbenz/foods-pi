@@ -1,8 +1,9 @@
 import imgPredeterminada from '../../assets/imgPredeterminada.png'
 import { CardContainer, InfoContainer, HealthScorePin, DietsList } from "./styles"
 
-export default function Card({ id, name='Anonimo', image, diets=[], healthScore=0 }) {
+export default function Card({ name, image, diets, healthScore=1 }) {
 	if(!image) image = imgPredeterminada;
+	if(!name) name = 'Indefinido'
 	
 	return (
 		<CardContainer>

@@ -31,7 +31,7 @@ async function getApiRecipes(flags) {
     let results = get.data.results;
     
     if (flags.name && get.data) {
-      results = get.data?.results.filter((recipe) => {
+      results = get.data.results.filter((recipe) => {
         return recipe.title.toLowerCase().includes(flags.name.toLowerCase());
       });
     }

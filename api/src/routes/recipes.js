@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
   const { recipe, diets } = req.body;
 
   const error = recipeDataValidation(recipe);
-  error && res.status(400).send("Faltan datos requeridos");
+  if(error) return res.status(400).send("Faltan datos requeridos");
   try {
     const newRecipe = await Recipe.create(recipe);
     const searchDiets = diets.length && await Diet.findAll({

@@ -12,8 +12,7 @@ export default function Pagination({ totalPages, currentPage, handle }) {
 
   function onKeyDown(e) {
     if(e.key === 'Enter') {
-      const regexp = /[0-9]/
-      if(!regexp.test(input) || parseInt(input) < 1) {
+      if(!/[0-9]/.test(input) || parseInt(input) < 1) {
         setInpunt(1)
         handle(1)
       } else if(parseInt(input) > totalPages) {
