@@ -29,31 +29,6 @@ export const Form = styled.form`
   }
 `;
 
-export const InputImageStyle = styled.div`
-  position: relative;
-  width: 120px;
-  height: max-content;
-  padding: 5px 0;
-  cursor: pointer;
-
-  input {
-    opacity: 0;
-    width: max-content;
-    height: 100%;
-}
-
-  span{
-    position: absolute;
-    border-radius: 8px;
-    padding: 6px 9px;
-    background-color: ${({theme}) => theme.color.primary};
-    z-index: 0;
-    width: max-content;
-    height: max-content;
-    top: 1px;
-  }
-`;
-
 export const Requirements = styled.ul`
   list-style-type: none;
   display: flex;

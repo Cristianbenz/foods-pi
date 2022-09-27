@@ -19,7 +19,7 @@ export default function NavBar() {
       <nav>
         <Menu>
           <li><Link to='/home'>Home</Link></li>
-          <li><Link to='recipeCreator'>Crear Receta</Link></li>
+          <li><Link to='/recipeCreator'>Crear Receta</Link></li>
         </Menu>
       </nav>
     </Header>

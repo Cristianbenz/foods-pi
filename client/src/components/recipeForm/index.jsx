@@ -7,7 +7,6 @@ import DietsCheckbox from "../dietsCheckbox";
 
 import {
   Form,
-  InputImageStyle,
   Requirements,
   StepsContainer,
   TextArea,
@@ -85,16 +84,13 @@ export default function RecipeForm({
         </label>
         <label htmlFor="image">
           Imagen:
-          <InputImageStyle>
-            <span>
-              {!image.length ? "Selecciona un archivo" : "✅Archivo cargado"}
-            </span>
-            <input type={"file"} name="image" onChange={onChange} />
-          </InputImageStyle>
-          <div>
-            <span>{!image.length ? "❕" : "✅"}</span>
-            El formato debe ser jpg, jpe/g o png
-          </div>
+          <input name='image' type="text" value={image} onChange={onChange} />
+          {image.length  
+            ? <div>
+                <span>{error.imageWrong ? "❕" : "✅"}</span>
+                Link de imagen jpg o jpe/g
+              </div>
+            : null}
         </label>
         <label htmlFor="healthScore">
           Puntos de Saludable:

@@ -26,13 +26,6 @@ export default function RecipeCreator() {
       else if(value > 100) value = 100
     }
 
-    if(name === 'image') {
-      const file = target.files[0];
-      if(!/([^\\s]+(\.png|jpeg|jpe|jpg))/.test(file.name)) return
-      const path = URL.createObjectURL(file);
-      value = path
-    }
-
     setFormData((prevData) => {
       return {
         ...prevData,

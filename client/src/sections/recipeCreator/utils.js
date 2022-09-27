@@ -24,6 +24,10 @@ export function validations(form) {
     errors.nameWrong = true
   }
 
+  if(form.image.length && !/^(http|https):.*(jpg|jpeg|jpe)$/.test(form.image)){
+    errors.imageWrong = true
+  }
+
   if (!form.summary) {
     errors.summaryRequired = true;
   }
