@@ -28,9 +28,7 @@ export default function RecipeCreator() {
 
     if(name === 'image') {
       const file = target.files[0];
-      if(!/([^\\s]+(\.png|jpeg|jpe))/.test(file.name)) {
-        return setError(prev => ({...prev, imageWrong: true }))
-      }
+      if(!/([^\\s]+(\.png|jpeg|jpe|jpg))/.test(file.name)) return
       const path = URL.createObjectURL(file);
       value = path
     }

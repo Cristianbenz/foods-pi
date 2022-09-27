@@ -5,7 +5,14 @@ import { validations } from "../../sections/recipeCreator/utils";
 
 import DietsCheckbox from "../dietsCheckbox";
 
-import { Form, InputImageStyle, Requirements, StepsContainer, TextArea, Button } from "./styles";
+import {
+  Form,
+  InputImageStyle,
+  Requirements,
+  StepsContainer,
+  TextArea,
+  Button,
+} from "./styles";
 
 export default function RecipeForm({
   data,
@@ -63,15 +70,15 @@ export default function RecipeForm({
           />
           <Requirements>
             <li>
-            <span>{error.nameRequired ? '❕': '✅'}</span>
+              <span>{error.nameRequired ? "❕" : "✅"}</span>
               El nombre es obligatorio.
             </li>
             <li>
-            <span>{error.nameMin ? '❕': '✅'}</span>
+              <span>{error.nameMin ? "❕" : "✅"}</span>
               Mínimo 4 caracteres.
             </li>
             <li>
-            <span>{error.nameWrong ? '❕': '✅'}</span>
+              <span>{error.nameWrong ? "❕" : "✅"}</span>
               Sin caracteres especiales.
             </li>
           </Requirements>
@@ -80,23 +87,14 @@ export default function RecipeForm({
           Imagen:
           <InputImageStyle>
             <span>
-              {!image.length 
-                ? 'Selecciona un archivo'
-                : '✅Archivo cargado'
-              }
+              {!image.length ? "Selecciona un archivo" : "✅Archivo cargado"}
             </span>
-            <input type={'file'} name='image' onChange={onChange} />
+            <input type={"file"} name="image" onChange={onChange} />
           </InputImageStyle>
-          {
-            image.length
-              ? (
-                <div>
-                  <span>{error.imageWrong ? '❕': '✅'}</span>
-                  El formato debe ser jpe/g o png
-                </div>
-              )
-              : null
-          }
+          <div>
+            <span>{!image.length ? "❕" : "✅"}</span>
+            El formato debe ser jpg, jpe/g o png
+          </div>
         </label>
         <label htmlFor="healthScore">
           Puntos de Saludable:
@@ -114,15 +112,15 @@ export default function RecipeForm({
           <TextArea name="summary" value={summary} onChange={onChange} />
           <Requirements>
             <li>
-              <span>{error.summaryRequired ? '❕': '✅'}</span>
+              <span>{error.summaryRequired ? "❕" : "✅"}</span>
               El resumen es obligatorio.
             </li>
             <li>
-              <span>{error.summaryMin ? '❕': '✅'}</span>
+              <span>{error.summaryMin ? "❕" : "✅"}</span>
               Minimo 80 caracteres.
             </li>
             <li>
-              <span>{error.summaryWrong ? '❕': '✅'}</span>
+              <span>{error.summaryWrong ? "❕" : "✅"}</span>
               Sin caracteres especiales.
             </li>
           </Requirements>
