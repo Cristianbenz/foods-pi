@@ -17,20 +17,22 @@ export const DetailsContainer = styled.div`
   > div h4 {
     font-size: 50px;
   }
-
-  > div ul {
-    list-style-type: none;
-  }
 `;
 
 export const Summary = styled.div`
   font-size: 30px;
 
 	p {
+    width: 700px;
 		padding-left: 20px;
 		word-break: break-all;
 	}
 `;
+
+export const StepsContainer = styled.ul`
+  list-style-type: none;
+  width: 700px;
+`
 
 export const Step = styled.li`
   display: flex;
@@ -38,6 +40,7 @@ export const Step = styled.li`
   gap: 12px;
   font-size: 30px;
   padding-left: 20px;
+  word-break: break-all;
 
   span {
     word-break: normal;

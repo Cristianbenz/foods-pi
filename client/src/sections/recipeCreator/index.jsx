@@ -8,7 +8,7 @@ import RecipeForm from "../../components/recipeForm";
 import Card from "../../components/card";
 import ToastContainer, { toast } from '../../components/notifications';
 
-import { CreateSection, DetailsContainer, Summary, Step } from "./styles";
+import { CreateSection, DetailsContainer, Summary, StepsContainer, Step } from "./styles";
 
 export default function RecipeCreator() {
   const [formData, setFormData] = useState({...formSchema});
@@ -106,7 +106,7 @@ export default function RecipeCreator() {
             </Summary>
             <div>
               <h4>Paso a Paso</h4>
-              <ul>
+              <StepsContainer>
                 {formData.recipe.steps.map((el) => {
                   return (
                     <Step key={el.id}>
@@ -115,7 +115,7 @@ export default function RecipeCreator() {
                     </Step>
                   );
                 })}
-              </ul>
+              </StepsContainer>
             </div>
           </DetailsContainer>
         </CreateSection>
