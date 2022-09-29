@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { setLoading, clearFilter, getRecipes, changeDiets } from '../../redux/actions';
+import { setLoading, clearFilter, getRecipes, changeDiets, setPage } from '../../redux/actions';
 
 import { Input } from "./styles";
 
@@ -13,6 +13,7 @@ export default function SearchInput() {
     dispatch(setLoading)
     dispatch(clearFilter)
     dispatch(changeDiets(new Array(12).fill(false)))
+    dispatch(setPage(1))
     dispatch(getRecipes(value))
   }
 
