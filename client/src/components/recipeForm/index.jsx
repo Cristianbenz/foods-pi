@@ -24,6 +24,7 @@ export default function RecipeForm({
   const { name, image, healthScore, summary } = data.recipe;
   const [steps, setSteps] = useState([]);
   const [valid, setValid] = useState(false);
+  const [selectedDiets, setSelectedDiets] = useState( new Array(12).fill(false) );
 
   function addStepInput() {
     setSteps((prevSteps) => [...prevSteps, { id: uuidv4(), value: "" }]);
@@ -53,11 +54,12 @@ export default function RecipeForm({
   function submit(e) {
     handleSubmit(e);
     setSteps([]);
+    setSelectedDiets(new Array(12).fill(false))
   }
 
   return (
     <>
-      <Form onSubmit={submit}>
+      <Form onSubmit={submit} autoComplete='off'>
         <label htmlFor="name">
           Nombre:
           <input
@@ -141,7 +143,7 @@ export default function RecipeForm({
             })}
           </ul>
         </StepsContainer>
-        <DietsCheckbox cb={handleDiets} />
+        <DietsCheckbox cb={handleDiets} control={selectedDiets} updateControl={setSelectedDiets} />
         {valid && <Button>Crear Receta</Button>}
       </Form>
     </>

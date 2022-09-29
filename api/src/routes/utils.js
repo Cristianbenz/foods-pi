@@ -8,7 +8,6 @@ async function preloadDiets() {
     "Gluten Free",
     "Dairy Free",
     "Ketogenic",
-    "Vegetarian",
     "Lacto-Vegetarian",
     "Ovo-Vegetarian",
     "Lacto Ovo Vegetarian",

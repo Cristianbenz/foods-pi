@@ -8,12 +8,13 @@ import RecipeForm from "../../components/recipeForm";
 import Card from "../../components/card";
 import ToastContainer, { toast } from '../../components/notifications';
 
-import { CreateSection, DetailsContainer, Step } from "./styles";
+import { CreateSection, DetailsContainer, Summary, Step } from "./styles";
 
 export default function RecipeCreator() {
   const [formData, setFormData] = useState({...formSchema});
   const [error, setError] = useState({});
   const [notifications, setNotifications] = useState([])
+
   const dispatch = useDispatch()
 
   function onChange(e) {
@@ -79,43 +80,46 @@ export default function RecipeCreator() {
 	}
 
   return (
-    <>
-      <ToastContainer notifications={notifications} setNotifications={setNotifications} />
-      <h1 className="title">¡Añade tu propia receta!</h1>
-      <CreateSection>
-        <RecipeForm
-          data={formData}
-          onChange={onChange}
-          error={error}
-          handleDiets={handleDiets}
-          handleSteps={handleSteps}
-          handleSubmit={handleSubmit}
-        />
-        <DetailsContainer>
-          <Card
-            name={formData.recipe.name}
-            image={formData.recipe.image}
-            healthScore={formData.recipe.healthScore}
+    <div className="background formBackground">
+      <div>
+        <ToastContainer notifications={notifications} setNotifications={setNotifications} />
+        <h1 className="title">¡Añade tu propia receta!</h1>
+        <CreateSection>
+          <RecipeForm
+            data={formData}
+            onChange={onChange}
+            error={error}
+            handleDiets={handleDiets}
+            handleSteps={handleSteps}
+            handleSubmit={handleSubmit}
           />
-          <div>
-            <h3>Resumen</h3>
-            <p>{formData.recipe.summary}</p>
-          </div>
-          <div>
-            <h3>Paso a Paso</h3>
-            <ul>
-              {formData.recipe.steps.map((el) => {
-                return (
-                  <Step key={el.id}>
-                    <span>{formData.recipe.steps.indexOf(el) + 1}-</span>
-                    {el.value}
-                  </Step>
-                );
-              })}
-            </ul>
-          </div>
-        </DetailsContainer>
-      </CreateSection>
-    </>
+          <DetailsContainer>
+            <Card
+              name={formData.recipe.name}
+              image={formData.recipe.image}
+              healthScore={formData.recipe.healthScore}
+              diets={formData.diets}
+            />
+            <Summary>
+              <h4>Resumen</h4>
+              <p>{formData.recipe.summary}</p>
+            </Summary>
+            <div>
+              <h4>Paso a Paso</h4>
+              <ul>
+                {formData.recipe.steps.map((el) => {
+                  return (
+                    <Step key={el.id}>
+                      <span>{formData.recipe.steps.indexOf(el) + 1}-</span>
+                      {el.value}
+                    </Step>
+                  );
+                })}
+              </ul>
+            </div>
+          </DetailsContainer>
+        </CreateSection>
+      </div>
+    </div>
   );
 }

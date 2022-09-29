@@ -1,60 +1,56 @@
-const { Recipe, conn } = require('../../src/db.js');
-const { expect } = require('chai');
+const { Recipe, conn } = require("../../src/db.js");
+const { expect, should } = require("chai");
 
-describe('Recipe model', () => {
-  before(() => conn.authenticate()
-    .catch((err) => {
-      console.error('Unable to connect to the database:', err);
-    }));
-
-  describe('Validators', () => {
-    beforeEach(() => Recipe.sync({ force: true }));
-
-    xit('should not create the Recipe if id is not send', async () => {
-      expect.assertions(1);
-      try {
-        await Recipe.create({
-          name: 'Pure de papa',
-          summary: 'Papa pisada con leche'
-        });
-      } catch (error) {
-        expect(error.message).toBeDefined();
-      }
+describe("Recipe model", function () {
+  before(function () {
+    conn.authenticate().catch((err) => {
+      console.error("Unable to connect to the database:", err);
     });
-  
-    xit('should not create the Recipe if name is not send', async () => {
-      expect.assertions(1);
+  });
+
+  describe("Validators", function () {
+    beforeEach(async function () {
+      await Recipe.sync({ force: true });
+    });
+
+    it("should not create the Recipe if name is not send", async function () {
       try {
         await Recipe.create({
-          id: '12juju',
-          summary: 'Carne hecha a las brazas'
+          summary:"para realizar unas tortillas para burritos o tacos es necesario harina, agua, sal, royal y aceite.",
+          healthScore: 60,
+          steps: [{ value: "paso1" }],
         });
       } catch (error) {
-        expect(error.message).toBeDefined();
+        expect().exist(error.message);
       }
     });
 
-    xit('should not create the Recipe if summary is not send', async () => {
-      expect.assertions(1);
+    it("should not create the Recipe if summary is not send", async function(){
       try {
         await Recipe.create({
-          id: 'h8ujs9',
-          summary: 'Pizza'
+          name: 'Tortillas para taco',
+          healthScore: 60,
+          steps: [{ value: "paso1" }],
         });
       } catch (error) {
-        expect(error.message).toBeDefined();
+        expect().exist(error.message)
       }
     });
 
-    xit('should create the Recipe if all required properties are ok', async () => {
-      const recipe = await Ability.create({
-        id: 'mghyusd',
-        name: '',
-        summary: ''
-      });
-      expect(recipe.toJSON()).toHaveProperty('id','mghyusd');
-      expect(recipe.toJSON()).toHaveProperty('name', '');
-      expect(recipe.toJSON()).toHaveProperty('summary', '');
+    it("Should create the recipe if required properties are ok", async function(){
+      try {
+        const recipe = await Recipe.create({
+          name: 'Tortillas para taco',
+          summary:"para realizar unas tortillas para burritos o tacos es necesario harina, agua, sal, royal y aceite.",
+          healthScore: 60,
+          steps: [{ value: "paso1" }],
+        });
+
+        expect(recipe).haveOwnProperty('dataValues')
+      } catch (error) {
+          expect(error).undefined()
+      }
+        
     });
 
   });

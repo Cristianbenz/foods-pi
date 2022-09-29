@@ -42,5 +42,8 @@ module.exports = (sequelize) => {
     steps: {
       type: DataTypes.ARRAY(DataTypes.JSON)
     }
-  });
+  },
+  {
+		timestamps: false
+	});
 };

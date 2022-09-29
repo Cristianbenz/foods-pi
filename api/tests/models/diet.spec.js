@@ -11,12 +11,11 @@ describe('Diet model', () => {
     await Diet.sync({force: true})
   } );
 
-	xit('Should create the Diet', async() => {
+	it('Should create the Diet', async() => {
 		const diet = await Diet.create({
-			id: 'algo',
 			name: 'Vegetariana'
 		});
-		expect(diet.toJSON()).toHaveProperty('id','algo');
-		expect(diet.toJSON()).toHaveProperty('name', 'Vegetariana');
+		expect(diet.toJSON()).to.haveOwnProperty('id');
+		expect(diet.toJSON()).to.haveOwnProperty('name', 'Vegetariana');
 	})
 });

@@ -10,7 +10,6 @@ import store from './redux/store';
 import 'boxicons/css/boxicons.min.css'
 import theme from './theme'
 import App from './App';
-import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>

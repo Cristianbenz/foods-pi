@@ -2,8 +2,10 @@ import axios from "axios";
 
 export const SET_LOADING = "SET_LOADING";
 export const GET_RECIPES = "GET_RECIPES";
+export const SET_PAGE = 'SET_PAGE'
 export const ORDER_BY = "ORDER_BY";
 export const FILTER_BY_DIETS = "FILTER_BY_RECIPE";
+export const CHANGE_DIETS = 'CHANGE_DIETS'
 export const CLEAR_FILTER = "CLEAR_FILTER"
 export const GET_DETAILS = "GET_DETAILS";
 export const CLEAR_DETAILS = "GET_DETAILS";
@@ -24,9 +26,17 @@ export function getRecipes(name) {
         payload: recipes.data,
       });
     } catch (error) {
+      dispatch({
+        type: GET_RECIPES,
+        payload: [],
+      });
       return Error(error.message);
     }
   };
+}
+
+export function setPage(value) {
+  return {type: SET_PAGE, payload: value}
 }
 
 export function addRecipe(recipe) {
@@ -67,6 +77,13 @@ export function getDiets() {
       return Error(error.message);
     }
   };
+}
+
+export function changeDiets(newDiets) {
+  return {
+    type: CHANGE_DIETS,
+    payload: newDiets
+  }
 }
 
 export function sortRecipes(sort, sortDirection) {

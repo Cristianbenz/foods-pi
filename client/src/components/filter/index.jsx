@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setLoading,
   sortRecipes,
   filterByDiets,
+  setPage,
   clearFilter,
+  changeDiets
 } from "../../redux/actions";
 
 import DietsCheckbox from "../dietsCheckbox";
@@ -13,13 +14,15 @@ import { FilterContainer, FilterForm } from "./styles";
 
 export default function Filter() {
   const recipes = useSelector(state => state.recipes)
-  const [ order, setOrder ] = useState(JSON.stringify({ sort: "name", sortDirection: "ASC" }))
+  const sortType = useSelector(state => state.sortType)
+  const selectedDiets = useSelector(state => state.selectedDiets)
+  const [ order, setOrder ] = useState(sortType)
   const dispatch = useDispatch();
 
   useEffect(() => {
     const { sort, sortDirection } = JSON.parse(order);
     dispatch(sortRecipes(sort, sortDirection));
-  }, [recipes, dispatch, order])
+  }, [dispatch, order, recipes])
 
   function handleSelect(e) {
     const value = e.target.value
@@ -28,28 +31,32 @@ export default function Filter() {
 
   function handleDiets(values) {
     const { sort, sortDirection } = JSON.parse(order);
+    const saveSort = () => dispatch(sortRecipes(sort, sortDirection))
+
 
     if (!values.length) {
       dispatch(clearFilter);
-      return dispatch(sortRecipes(sort, sortDirection))
+      dispatch(setPage(1))
+      return saveSort()
     }
     
-    dispatch(setLoading);
     dispatch(filterByDiets(values));
-    dispatch(sortRecipes(sort, sortDirection));
+    saveSort()
+    dispatch(setPage(1))
+  }
+
+  function setDiets(selected) {
+    dispatch(changeDiets(selected))
   }
 
   return (
     <FilterContainer>
-      <FilterForm autoComplete="off">
+      <FilterForm>
         <label>
           Ordenar por:
           <select
             onChange={handleSelect}
-            defaultValue={JSON.stringify({
-              sort: "name",
-              sortDirection: "ASC",
-            })}
+            defaultValue={sortType}
           >
             <option
               value={JSON.stringify({ sort: "name", sortDirection: "ASC" })}
@@ -80,7 +87,7 @@ export default function Filter() {
             </option>
           </select>
         </label>
-        <DietsCheckbox cb={handleDiets} />
+      <DietsCheckbox cb={handleDiets} control={selectedDiets} updateControl={setDiets} />
       </FilterForm>
     </FilterContainer>
   );

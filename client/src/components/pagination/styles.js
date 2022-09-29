@@ -7,10 +7,15 @@ export const Container = styled.div`
   justify-content: center;
   gap: 15px;
   padding: 30px 20px;
-  font-size: 20px;
+  font-size: 24px;
+
+  p, i {
+    color: ${({ theme }) => theme.color.secondary};
+  }
 `;
 
 export const NumBox = styled.input`
+  border-radius: 5px;
   width: 30px;
   border: 1px solid black;
   padding: 6px;

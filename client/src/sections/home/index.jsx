@@ -1,34 +1,29 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getRecipes } from "../../redux/actions";
+import { getRecipes, setLoading, setPage } from "../../redux/actions";
 
 import CardsList from "../../components/cardsList";
 import Filter from "../../components/filter";
 import Pagination from "../../components/pagination";
-import Loader from "../../components/loader";
 
-import { BodyContainer, NotFound } from "./styles";
+import { BodyContainer } from "./styles";
 
 export default function Home() {
   const list = useSelector((state) => state.recipes);
   const filter = useSelector((state) => state.filter);
-  const isSearching = useSelector((state) => state.searching);
-  const [page, setPage] = useState(1);
+  const page = useSelector((state) => state.page);
   const [recipes, setRecipes] = useState([]);
 
   const dispatch = useDispatch();
-  const totalPages = Math.ceil((filter.length || list.length) / 9);
+  const totalPages = Math.ceil((filter.length || list.length) / 9) || 1;
 
   useEffect(() => {
+    dispatch(setLoading);
     dispatch(getRecipes());
   }, [dispatch]);
 
-  useEffect(() => {
-    setPage(1);
-  }, [list, filter]);
-
   function handlePagination(currentPage) {
-    setPage(currentPage);
+    dispatch(setPage(currentPage));
   }
 
   useEffect(() => {
@@ -41,39 +36,27 @@ export default function Home() {
     }
   }, [page, filter, list]);
 
-  const Content = () => {
-    if (isSearching) {
-      return <Loader />;
-    }
-    
-    return !recipes.length ? (
-      <NotFound>
-        <h2>No se encontraron recetas</h2>
-      </NotFound>
-    ) : (
-      <div>
-        <Pagination
-          totalPages={totalPages}
-          currentPage={page}
-          handle={handlePagination}
-        />
-        <CardsList list={recipes} />
-        <Pagination
-          totalPages={totalPages}
-          currentPage={page}
-          handle={handlePagination}
-        />
-      </div>
-    );
-  };
-
   return (
-    <>
-      <h1 className="title">Recetas</h1>
-      <BodyContainer>
-        <Filter />
-        <Content />
-      </BodyContainer>
-    </>
+    <div className="background homeBackground">
+      <div>
+        <h1 className="title">Recetas</h1>
+        <BodyContainer>
+          <Filter />
+          <div>
+            <Pagination
+              totalPages={totalPages}
+              currentPage={page}
+              handle={handlePagination}
+            />
+            <CardsList list={recipes} />
+            <Pagination
+              totalPages={totalPages}
+              currentPage={page}
+              handle={handlePagination}
+            />
+          </div>
+        </BodyContainer>
+      </div>
+    </div>
   );
 }

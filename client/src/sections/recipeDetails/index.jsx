@@ -33,65 +33,61 @@ export default function RecipeDetails() {
     };
   }, [dispatch, recipeId]);
 
-  function Content() {
-    if (loading) {
-      return (
-        <LoaderContainer>
-          <img src={loader} alt="Cargando..." />
-        </LoaderContainer>
-      );
-    }
-    
+  if (loading) {
     return (
-      <>
-        {!Object.keys(details).length ? (
-          <div>
-            <h1>No existe esta receta</h1>
-          </div>
-        ) : (
-          <>
-            <FirstSection>
-              <RecipeImg
-                src={image || imgPredeterminada}
-                alt="Foto de la receta"
-              />
-              <article>
-                <h1>{name}</h1>
-                <h2>
-                  HealthScore: <ScoreNumber>{healthScore}</ScoreNumber>
-                </h2>
-                <h2>Tipo de dieta:</h2>
-                <DietsList>
-                  {diets?.map((el) => {
-                    return <li key={diets.indexOf(el)}>{el.name || el}</li>;
-                  })}
-                </DietsList>
-              </article>
-            </FirstSection>
-            <SecondSection>
-              <div>
-                <h2>Resumen</h2>
-                <p>{summary}</p>
-              </div>
-              <div>
-                <h2>Paso a paso</h2>
-                <StepsList>
-                  {steps?.map((el) => {
-                    return (
-                      <li key={steps.indexOf(el)}>
-                        <span>{steps.indexOf(el) + 1}</span>
-                        {el.value || el}
-                      </li>
-                    );
-                  })}
-                </StepsList>
-              </div>
-            </SecondSection>
-          </>
-        )}
-      </>
+      <LoaderContainer>
+        <img src={loader} alt="Cargando..." />
+      </LoaderContainer>
     );
   }
 
-  return <Content />;
+  return (
+    <div className="background detailsBackgorund">
+      {!Object.keys(details).length ? (
+        <div>
+          <h1>No existe esta receta</h1>
+        </div>
+      ) : (
+        <div>
+          <FirstSection>
+            <RecipeImg
+              src={image || imgPredeterminada}
+              alt="Foto de la receta"
+            />
+            <article>
+              <h1>{name}</h1>
+              <h2>
+                HealthScore: <ScoreNumber>{healthScore}</ScoreNumber>
+              </h2>
+              <h2>Tipo de dieta:</h2>
+              <DietsList>
+                {diets?.map((el) => {
+                  return <li key={diets.indexOf(el)}>{el.name || el}</li>;
+                })}
+              </DietsList>
+            </article>
+          </FirstSection>
+          <SecondSection>
+            <div>
+              <h2>Resumen</h2>
+              <p>{summary}</p>
+            </div>
+            <div>
+              <h2>Paso a paso</h2>
+              <StepsList>
+                {steps?.map((el) => {
+                  return (
+                    <li key={steps.indexOf(el)}>
+                      <span>{steps.indexOf(el) + 1}</span>
+                      {el.value || el}
+                    </li>
+                  );
+                })}
+              </StepsList>
+            </div>
+          </SecondSection>
+        </div>
+      )}
+    </div>
+  );
 }

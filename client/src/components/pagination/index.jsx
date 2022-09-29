@@ -1,14 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Container, NumBox, Arrow } from "./styles";
 
 export default function Pagination({ totalPages, currentPage, handle }) {
-  const pages = [1]
-  const [input, setInpunt] = useState(currentPage)
+  const [input, setInpunt] = useState(1)
 
-  for (let i = 2; i <= totalPages; i++) {
-    pages.push(i);
-  }
+  useEffect(() => {
+    setInpunt(currentPage)
+  }, [currentPage])
 
   function onKeyDown(e) {
     if(e.key === 'Enter') {

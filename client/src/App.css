@@ -15,9 +15,6 @@
   font-size: 78px;
   padding: 20px;
 }
-
-
-
 img {
   width: 100%;
   height: auto;
@@ -27,4 +24,26 @@ html, #root, body {
   background-color: #f8a990;
   overflow-x: hidden;
   min-height: 100vh;
+}
+
+.background {
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.background > div {
+  min-height: 100vh;
+  backdrop-filter: blur(4px) brightness(.9);
+}
+
+.homeBackground {
+  background-image: url('../src/assets/homeBackground.jpg');
+}
+
+.detailsBackgorund{
+  background-image: url('../src/assets/detailBackground.jpg');
+}
+
+.formBackground {
+  background-image: url('../src/assets/formBackground.jpg');
 }

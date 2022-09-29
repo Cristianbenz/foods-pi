@@ -1,17 +1,22 @@
 import {
   SET_LOADING,
   GET_DETAILS,
+  SET_PAGE,
   CLEAR_DETAILS,
   GET_RECIPES,
   GET_DIETS,
   ORDER_BY,
   FILTER_BY_DIETS,
+  CHANGE_DIETS,
   CLEAR_FILTER,
 } from "./actions";
 
 const initialState = {
   recipes: [],
   filter: [],
+  sortType: JSON.stringify({ sort: "name", sortDirection: "ASC" }),
+  selectedDiets: new Array(12).fill(false),
+  page: 1,
   details: {},
   diets: [],
   searching: true,
@@ -35,6 +40,11 @@ export default function rootReducer(state = initialState, { type, payload }) {
         recipes: [...payload],
         searching: false,
       };
+    case SET_PAGE:
+      return {
+        ...state,
+        page: payload
+      }
     case ORDER_BY:
       let dir =
         payload.sortDirection === "DESC"
@@ -53,6 +63,7 @@ export default function rootReducer(state = initialState, { type, payload }) {
         : state.filter.sort(dir);
       return {
         ...state,
+        sortType: JSON.stringify(payload),
         filter: [...newOrder]
       };
     case FILTER_BY_DIETS:
@@ -66,9 +77,13 @@ export default function rootReducer(state = initialState, { type, payload }) {
       const result = !search.length ? [undefined] : search;
       return {
         ...state,
-        filter: result,
-        searching: false,
+        filter: result
       };
+    case CHANGE_DIETS:
+      return {
+        ...state,
+        selectedDiets: [...payload]
+      }
     case CLEAR_FILTER:
       return {
         ...state,
