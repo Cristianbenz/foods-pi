@@ -7,23 +7,21 @@ import {
   CtaContainer,
   StyledCta,
   HeaderTable,
-  Plate,
-  // Ingredients
+  Plate
 } from "./styles";
 
 export default function Header() {
   return (
     <HeaderContainer>
       <LeftContainer>
-        <HeaderTitle>Recetas Linguini</HeaderTitle>
+        <HeaderTitle>Linguini's Recipes</HeaderTitle>
         <CtaContainer to="/home">
-          <StyledCta>¡Mira las Recetas!</StyledCta>
+          <StyledCta>¡Look the recipes!</StyledCta>
         </CtaContainer>
         <Wave />
       </LeftContainer>
       <HeaderTable>
         <Plate src={plate} alt="" />
-        {/* <Ingredients src={ingredientes} alt="" /> */}
       </HeaderTable>
     </HeaderContainer>
   );

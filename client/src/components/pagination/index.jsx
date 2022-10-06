@@ -45,7 +45,7 @@ export default function Pagination({ totalPages, currentPage, handle }) {
     <Container>
       <Arrow className='bx bxs-left-arrow' disabled={currentPage === 1} onClick={handleLess} />
         <NumBox value={input} type='text' onChange={onChange} onKeyDown={onKeyDown} />
-        <p>de {totalPages}</p>
+        <p>of {totalPages}</p>
       <Arrow className='bx bxs-right-arrow' disabled={currentPage === totalPages} onClick={handleMore} />
     </Container>
   );

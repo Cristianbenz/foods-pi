@@ -45,7 +45,7 @@ export default function RecipeDetails() {
     <div className="background detailsBackgorund">
       {!Object.keys(details).length ? (
         <div>
-          <h1>No existe esta receta</h1>
+          <h1>This recipe doesn't exist.</h1>
         </div>
       ) : (
         <div>
@@ -59,7 +59,7 @@ export default function RecipeDetails() {
               <h2>
                 HealthScore: <ScoreNumber>{healthScore}</ScoreNumber>
               </h2>
-              <h2>Tipo de dieta:</h2>
+              <h2>Type of diet:</h2>
               <DietsList>
                 {diets?.map((el) => {
                   return <li key={diets.indexOf(el)}>{el.name || el}</li>;
@@ -69,11 +69,11 @@ export default function RecipeDetails() {
           </FirstSection>
           <SecondSection>
             <div>
-              <h2>Resumen</h2>
+              <h2>Summary</h2>
               <p>{summary}</p>
             </div>
             <div>
-              <h2>Paso a paso</h2>
+              <h2>Step by step</h2>
               <StepsList>
                 {steps?.map((el) => {
                   return (

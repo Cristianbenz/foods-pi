@@ -83,7 +83,7 @@ export default function RecipeCreator() {
     <div className="background formBackground">
       <div>
         <ToastContainer notifications={notifications} setNotifications={setNotifications} />
-        <h1 className="title">¡Añade tu propia receta!</h1>
+        <h1 className="title">Add your own recipe!</h1>
         <CreateSection>
           <RecipeForm
             data={formData}

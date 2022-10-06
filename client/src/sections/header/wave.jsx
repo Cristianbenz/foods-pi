@@ -3,14 +3,30 @@ import styled from "styled-components";
 const WaveStyle = styled.svg`
   position: absolute;
   z-index: 1;
-	top: 0;
-  right: -318px;
-  transform: rotate(90deg);
+	bottom: -320px;
+  left: -20px;
+  transform: rotateZ(180deg);
+  width: 120%;
+  height: 100%;
+
+  path {
+    width: 100%;
+    height: 100%;
+  }
+
+  @media screen and (min-width: 800px) {
+    width: 100vh;
+    height: 100%;
+    left: auto;
+    top: 0;
+    right: -318px;
+    transform: rotateZ(90deg);
+  }
 `;
 
 export default function Wave() {
   return (
-    <WaveStyle width="100vh" height='100%' xmlns="http://www.w3.org/2000/svg">
+    <WaveStyle xmlns="http://www.w3.org/2000/svg">
       <path
         fill='#f8a990'
         fillOpacity="1"

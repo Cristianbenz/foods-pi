@@ -28,7 +28,7 @@ export default function DietsCheckbox({cb, control, updateControl}) {
 
   return (
     <CheckBoxContainer>
-      <span>Tipo de dieta</span>
+      <span>Type of diet</span>
       {diets?.map((el, i) => (
         <label key={el.id} htmlFor={el.id}>
           <input type="checkbox" onChange={() => handleCheck(i)} name={el.name} id={el.id} value={el.name} checked={control[i]} />

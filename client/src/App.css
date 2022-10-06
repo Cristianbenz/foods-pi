@@ -12,9 +12,12 @@
 .title {
   text-align: center;
   font-style: italic;
-  font-size: 78px;
+  font-size: 70px;
   padding: 20px;
+
+  /* font-size: 78px; */
 }
+
 img {
   width: 100%;
   height: auto;
@@ -28,7 +31,10 @@ html, #root, body {
 
 .background {
   background-size: cover;
+  background-position: right;
   background-attachment: fixed;
+
+  /* background-size: cover; */
 }
 
 .background > div {

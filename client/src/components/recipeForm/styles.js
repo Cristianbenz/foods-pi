@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 export const Form = styled.form`
-  font-size: 20px;
+  width: 90vw;
+  font-size: 17px;
   display: flex;
   gap: 17px;
   padding: 25px 30px;
   flex-direction: column;
-  width: 500px;
   border-radius: 20px;
   background-color: ${({ theme }) => theme.color.secondary};
 
@@ -14,7 +14,7 @@ export const Form = styled.form`
     display: flex;
     gap: 10px;
     flex-direction: column;
-    font-size: 20px;
+    font-size: 17px;
     font-weight: bolder;
 
     & > input {
@@ -24,8 +24,21 @@ export const Form = styled.form`
       border-left: 1px solid black;
       border-bottom: 1px solid black;
       padding: 5px;
+      font-size: 17px;
+
+      @media screen and (min-width: 800px) {
+        font-size: 20px;
+      }
+    }
+
+    @media screen and (min-width: 800px) {
       font-size: 20px;
     }
+  }
+
+  @media screen and (min-width: 800px) {
+    font-size: 20px;
+    width: 500px;
   }
 `;
 
@@ -41,7 +54,11 @@ export const TextArea = styled.textarea`
   background-color: ${({ theme }) => theme.color.primary};
   height: 60px;
   padding: 10px;
-  font-size: 20px;
+  font-size: 17px;
+
+  @media screen and (min-width: 800px) {
+    font-size: 20px;
+  }
 `;
 
 export const RequiredMsg = styled.span`
@@ -61,11 +78,16 @@ export const StepsContainer = styled.div`
 
     input {
       height: 30px;
-      width: 400px;
       background-color: ${({ theme }) => theme.color.primary};
       border: none;
       padding: 5px;
-      font-size: 20px;
+      font-size: 17px;
+
+      @media screen and (min-width: 800px) {
+        font-size: 20px;
+        width: 86%;
+        width: 400px;
+      }
     }
   }
 

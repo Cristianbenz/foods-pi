@@ -11,7 +11,7 @@ const router = Router();
 router.get("/", async (req, res) => {
   try {
     let result = await getRecipeList({ ...req.query });
-    if (result.length < 1) {
+    if (!result.length) {
       return res.status(404).send("No se encontraron recetas");
     }
     res.json(result);

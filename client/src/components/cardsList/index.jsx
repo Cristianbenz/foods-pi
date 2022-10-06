@@ -16,7 +16,7 @@ export default function CardsList({ list }) {
   return (
     !list.length ? (
       <NotFound>
-        <h2>No se encontraron recetas</h2>
+        <h2>No recipes found</h2>
       </NotFound>
     ) : (
       <Cardscontainer>

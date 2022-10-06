@@ -61,7 +61,7 @@ export default function RecipeForm({
     <>
       <Form onSubmit={submit} autoComplete='off'>
         <label htmlFor="name">
-          Nombre:
+          Name:
           <input
             type="text"
             minLength={"4"}
@@ -72,30 +72,30 @@ export default function RecipeForm({
           <Requirements>
             <li>
               <span>{error.nameRequired ? "❕" : "✅"}</span>
-              El nombre es obligatorio.
+              The name is required.
             </li>
             <li>
               <span>{error.nameMin ? "❕" : "✅"}</span>
-              Mínimo 4 caracteres.
+              At least 4 characters .
             </li>
             <li>
               <span>{error.nameWrong ? "❕" : "✅"}</span>
-              Sin caracteres especiales.
+              Not include special characters.
             </li>
           </Requirements>
         </label>
         <label htmlFor="image">
-          Link de imagen:
+          Url of the image:
           <input name='image' type="text" value={image} onChange={onChange} />
           {image.length  
             ? <div>
                 <span>{error.imageWrong ? "❕" : "✅"}</span>
-                Link de imagen jpg o jpe/g
+                Url of the image jpg o jpe/g
               </div>
             : null}
         </label>
         <label htmlFor="healthScore">
-          Puntos de Saludable:
+          HealthScore:
           <input
             type="number"
             min="1"
@@ -106,25 +106,25 @@ export default function RecipeForm({
           />
         </label>
         <label htmlFor="summary">
-          Resumen:
+          Summary:
           <TextArea name="summary" value={summary} onChange={onChange} />
           <Requirements>
             <li>
               <span>{error.summaryRequired ? "❕" : "✅"}</span>
-              El resumen es obligatorio.
+              The summary is required.
             </li>
             <li>
               <span>{error.summaryMin ? "❕" : "✅"}</span>
-              Minimo 80 caracteres.
+              At least 80 characters .
             </li>
             <li>
               <span>{error.summaryWrong ? "❕" : "✅"}</span>
-              Sin caracteres especiales.
+              Not include special characters.
             </li>
           </Requirements>
         </label>
         <StepsContainer>
-          <span>Pasos</span>{" "}
+          <span>Steps</span>{" "}
           <button type="button" onClick={addStepInput}>+</button>
           <ul>
             {steps.map((el) => {
@@ -144,7 +144,7 @@ export default function RecipeForm({
           </ul>
         </StepsContainer>
         <DietsCheckbox cb={handleDiets} control={selectedDiets} updateControl={setSelectedDiets} />
-        {valid && <Button>Crear Receta</Button>}
+        {valid && <Button>Create Recipe</Button>}
       </Form>
     </>
   );

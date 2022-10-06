@@ -39,7 +39,7 @@ export default function Home() {
   return (
     <div className="background homeBackground">
       <div>
-        <h1 className="title">Recetas</h1>
+        <h1 className="title">Recipes</h1>
         <BodyContainer>
           <Filter />
           <div>

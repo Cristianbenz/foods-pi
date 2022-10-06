@@ -5,18 +5,19 @@ import {
   filterByDiets,
   setPage,
   clearFilter,
-  changeDiets
+  changeDiets,
 } from "../../redux/actions";
 
 import DietsCheckbox from "../dietsCheckbox";
 
-import { FilterContainer, FilterForm } from "./styles";
+import { FilterContainer, FilterForm, FilterButton } from "./styles";
 
 export default function Filter() {
   const recipes = useSelector(state => state.recipes)
   const sortType = useSelector(state => state.sortType)
   const selectedDiets = useSelector(state => state.selectedDiets)
   const [ order, setOrder ] = useState(sortType)
+  const [ show, setShow ] = useState(false)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -50,10 +51,12 @@ export default function Filter() {
   }
 
   return (
-    <FilterContainer>
+    <>
+      <FilterButton onClick={() => setShow(prev => !prev)}>Filter</FilterButton>
+      <FilterContainer active={show}>
       <FilterForm>
         <label>
-          Ordenar por:
+          Sort by:
           <select
             onChange={handleSelect}
             defaultValue={sortType}
@@ -61,12 +64,12 @@ export default function Filter() {
             <option
               value={JSON.stringify({ sort: "name", sortDirection: "ASC" })}
             >
-              Alfabetico A - Z
+              Alphabetic A - Z
             </option>
             <option
               value={JSON.stringify({ sort: "name", sortDirection: "DESC" })}
             >
-              Alfabetico Z - A
+              Alphabetic Z - A
             </option>
             <option
               value={JSON.stringify({
@@ -90,5 +93,6 @@ export default function Filter() {
       <DietsCheckbox cb={handleDiets} control={selectedDiets} updateControl={setDiets} />
       </FilterForm>
     </FilterContainer>
+    </>
   );
 }
