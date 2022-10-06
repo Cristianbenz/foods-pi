@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useHistory } from 'react-router-dom'
 import { useDispatch } from "react-redux";
 
 import { addRecipe } from "../../redux/actions";
@@ -15,6 +16,7 @@ export default function RecipeCreator() {
   const [error, setError] = useState({});
   const [notifications, setNotifications] = useState([])
 
+  const { push } = useHistory()
   const dispatch = useDispatch()
 
   function onChange(e) {
@@ -68,9 +70,12 @@ export default function RecipeCreator() {
 		e.preventDefault()
 		if(Object.keys(error) < 1) {
       try {
-        dispatch(addRecipe(formData))
-        setFormData({...formSchema})
-        toast('success', 'Receta creada correctamente', notifications, setNotifications)
+        dispatch(addRecipe(formData));
+        setFormData({...formSchema});
+        toast('success', 'Receta creada correctamente', notifications, setNotifications);
+        setTimeout(() => {
+          push('/home')
+        }, 1000)
       } catch (error) {
           toast('error', 'Ya existe esta receta', notifications, setNotifications)
       }

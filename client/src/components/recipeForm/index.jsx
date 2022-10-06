@@ -48,7 +48,9 @@ export default function RecipeForm({
 
   useEffect(() => {
     const errors = validations(data.recipe);
-    !Object.keys(errors).length && setValid(true);
+    !Object.keys(errors).length 
+      ? setValid(true) 
+      : setValid(false);
   }, [data]);
 
   function submit(e) {
