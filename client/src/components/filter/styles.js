@@ -32,7 +32,8 @@ export const FilterContainer = styled.aside`
 		overflow: visible;
 		width: 100%;
 		height: 600px;
-		padding: 25px 20px;
+		background: none;
+		padding: 120px 20px;
 	}
 
 	
