@@ -26,7 +26,7 @@ export default function NavBar() {
         </MenuButton>
         <Menu open={show}>
           <li><Link to='/home'>Home</Link></li>
-          <li><Link to='/recipeCreator'>Crear Receta</Link></li>
+          <li><Link to='/recipeCreator'>Create Recipe</Link></li>
         </Menu>
       </nav>
     </Header>
