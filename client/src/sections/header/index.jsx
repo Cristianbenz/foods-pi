@@ -16,7 +16,7 @@ export default function Header() {
       <LeftContainer>
         <HeaderTitle>Linguini's Recipes</HeaderTitle>
         <CtaContainer to="/home">
-          <StyledCta>¡Look the recipes!</StyledCta>
+          <StyledCta>Look the recipes!</StyledCta>
         </CtaContainer>
         <Wave />
       </LeftContainer>
