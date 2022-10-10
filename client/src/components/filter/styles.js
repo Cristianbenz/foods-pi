@@ -10,6 +10,20 @@ export const FilterButton = styled.span`
 	}
 `
 
+export const ModalBackdrop = styled.div`
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: black;
+	height: 100%;
+	width: 100vw;
+	display: ${({ active }) => active ? 'block' : 'none'};
+
+	@media screen and (min-width: 800px) {
+		display: none;
+	}
+`
+
 export const FilterContainer = styled.aside`
 	position: absolute;
 	display: flex;

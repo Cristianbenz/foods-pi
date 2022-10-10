@@ -10,7 +10,7 @@ import {
 
 import DietsCheckbox from "../dietsCheckbox";
 
-import { FilterContainer, FilterForm, FilterButton } from "./styles";
+import { FilterContainer, FilterForm, FilterButton, ModalBackdrop } from "./styles";
 
 export default function Filter() {
   const recipes = useSelector(state => state.recipes)
@@ -53,6 +53,7 @@ export default function Filter() {
   return (
     <>
       <FilterButton onClick={() => setShow(prev => !prev)}>Filter</FilterButton>
+      <ModalBackdrop active={show} onClick={() => setShow(false)} />
       <FilterContainer active={show}>
       <FilterForm>
         <label>

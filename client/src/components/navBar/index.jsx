@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import logo from '../../assets/logo.png'
@@ -10,6 +10,10 @@ import { Header, Menu, Logo, MenuButton } from "./styles";
 export default function NavBar() {
   const [ show, setShow ] = useState(false)
   const { pathname } = useLocation()
+
+  useEffect(() => {
+    setShow(false)
+  }, [pathname])
 
   if(pathname === '/') return null
   return (
