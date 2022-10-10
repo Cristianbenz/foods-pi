@@ -32,6 +32,11 @@ export const HeaderTitle = styled.h1`
 
 
   @media screen and (min-width: 800px) {
+    font-size: 100px;
+    font-weight: bolder;
+  }
+
+  @media screen and (min-width: 1580px) {
     font-size: 200px;
     font-weight: bolder;
   }
@@ -51,6 +56,10 @@ export const StyledCta = styled.button`
   cursor: pointer;
   
   @media screen and (min-width: 800px){
+    font-size: 32px;
+  }
+
+  @media screen and (min-width: 1580px){
     font-size: 42px;
   }
 `;
@@ -76,9 +85,16 @@ export const Plate = styled.img`
   filter: drop-shadow(-10px 10px 10px rgba(0, 0, 0, 0.35));
 
   @media screen and (min-width: 800px) {
-    width: 650px;
+    width: 550px;
     top: auto;
+    left: -50px;
+    bottom: -120px;
+  }
+
+  @media screen and (min-width: 1580px) {
+    width: 650px;
     left: -100px;
     bottom: -130px;
   }
+
 `;
