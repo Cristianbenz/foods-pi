@@ -6,7 +6,7 @@ export const BodyContainer = styled.div`
   padding: 10px 20px;
   gap: 1px;
 
-  @media screen and (min-width: 800px) {
+  @media screen and (min-width: 1100px) {
     display: grid;
     grid-template-columns: 350px auto;
     gap: 1px;

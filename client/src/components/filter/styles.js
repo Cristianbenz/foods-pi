@@ -5,7 +5,7 @@ export const FilterButton = styled.span`
 	height: max-content;
 	font-size: 22px;
 
-	@media screen and (min-width: 800px) {
+	@media screen and (min-width: 1100px) {
 		display: none;
 	}
 `
@@ -19,7 +19,7 @@ export const ModalBackdrop = styled.div`
 	width: 100vw;
 	display: ${({ active }) => active ? 'block' : 'none'};
 
-	@media screen and (min-width: 800px) {
+	@media screen and (min-width: 1100px) {
 		display: none;
 	}
 `
@@ -38,7 +38,7 @@ export const FilterContainer = styled.aside`
 	opacity: ${({ active }) => active ? 1 : 0 };
 	height: ${({ active }) => active ? '350px' : 0 };
 
-	@media screen and (min-width: 800px) {
+	@media screen and (min-width: 1100px) {
 		position: static;
 		grid-column: 1/2;
 		opacity: 1;
