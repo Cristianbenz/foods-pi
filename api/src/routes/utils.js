@@ -63,49 +63,51 @@ async function getDbRecipes(flags) {
 }
 
 async function getRecipeList(flags) {
-  try {
-    const dbRecipes = await getDbRecipes(flags)
-    const apiRecipes = await getApiRecipes(flags)
-    return [...dbRecipes, ...apiRecipes]
-    
-  } catch (error) {
-    throw Error(error);
+  const { filter } = flags
+  const { options } = flags
+  
+  const { name, diets } = filter
+  const { sortType='', sortDirection='', page=1 } = options
+  const order = options?.sortType && options?.sortDirection && [[sortType, sortDirection.toUpperCase()]];
+  const where = {}
+  const DietsWhere = {}
+
+  if(name) {
+    where.name = {
+      [Op.iLike]: `%${name}%`
+    }
   }
+
+  if(diets) {
+    const dietsArr = diets.split(',')
+    DietsWhere.name = {
+      [Op.or]: dietsArr.map(el => ({[Op.iLike]: el}))
+    }
+  }
+
+
+  let config = {
+    distinct: true,
+    where,
+    attributes: ["name", "id", "image", "healthScore"],
+    include: {
+      model: Diet,
+      where: DietsWhere,
+    },
+    order,
+    offset: (page - 1) * 9,
+    limit: 9
+  };
+
+  return { count, rows } = await Recipe.findAndCountAll(config);
 }
 
-async function getByIdAtApi(id) {
+async function getRecipeDetails(id) {
   try {
-    let response = await axios(
-      `${API}recipes/${id}/information?includeNutrition=false&apiKey=${API_KEY}`
-    );
-    let recipe = response.data;
-    return {
-      image: recipe.image,
-      name: recipe.title,
-      healthScore: recipe.healthScore,
-      diets: recipe.diets,
-      summary: recipe.summary.replace(/<[^>]*>/g, ''),
-      steps: recipe.analyzedInstructions[0].steps.map((el) => el.step),
-    };
-  } catch (error) {
-    return undefined;
-  }
-}
-
-async function getByPkDb(id) {
-  try {
-    let recipe = await Recipe.findByPk(id, {include: Diet});
+    let recipe = await Recipe.findOne({where:{id}, include: Diet});
     return recipe;
   } catch (e) {
     return undefined;
-  }
-}
-
-async function getRecipeDetails(recetaId) {
-  try {
-    return await getByPkDb(recetaId) || await getByIdAtApi(recetaId);
-  } catch (error) {
-    throw Error(error);
   }
 }
 
