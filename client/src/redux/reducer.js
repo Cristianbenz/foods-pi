@@ -5,18 +5,32 @@ import {
   CLEAR_DETAILS,
   GET_RECIPES,
   GET_DIETS,
+  SEARCH_BY_NAME,
   ORDER_BY,
   FILTER_BY_DIETS,
-  CHANGE_DIETS,
   CLEAR_FILTER,
+  CHANGE_DIETS,
 } from "./actions";
+
+const filter = window.sessionStorage.getItem('filter') ?
+  JSON.parse(window.sessionStorage.getItem('filter')) : (
+  {
+    name: "",
+    diets: [],
+    page: 1,
+    sortType: "",
+    sortDirection: "",
+  }
+)
+
+const savedDiets = window.sessionStorage.getItem('selectedDiets') ?
+  JSON.parse(window.sessionStorage.getItem('selectedDiets')) :
+  new Array(12).fill(false)
 
 const initialState = {
   recipes: [],
-  filter: [],
-  sortType: JSON.stringify({ sort: "name", sortDirection: "ASC" }),
-  selectedDiets: new Array(12).fill(false),
-  page: 1,
+  filter,
+  savedDiets,
   details: {},
   diets: [],
   searching: true,
@@ -37,57 +51,59 @@ export default function rootReducer(state = initialState, { type, payload }) {
     case GET_RECIPES:
       return {
         ...state,
-        recipes: [...payload],
+        recipes: payload,
         searching: false,
       };
     case SET_PAGE:
       return {
         ...state,
-        page: payload
-      }
-    case ORDER_BY:
-      let dir =
-        payload.sortDirection === "DESC"
-          ? (a, b) => {
-              if (a[payload.sort] < b[payload.sort]) return 1;
-              if (a[payload.sort] > b[payload.sort]) return -1;
-              return 0;
-            }
-          : (a, b) => {
-              if (a[payload.sort] > b[payload.sort]) return 1;
-              if (a[payload.sort] < b[payload.sort]) return -1;
-              return 0;
-            };
-      let newOrder = !state.filter.length
-        ? state.recipes.sort(dir)
-        : state.filter.sort(dir);
+        filter: {
+          ...state.filter,
+          page: payload,
+        },
+      };
+    case SEARCH_BY_NAME:
       return {
         ...state,
-        sortType: JSON.stringify(payload),
-        filter: [...newOrder]
+        filter: {
+          diets: [],
+          page: 1,
+          sortType: "",
+          sortDirection: "",
+          name: payload,
+        },
+        savedDiets: new Array(12).fill(false)
+      };
+    case ORDER_BY:
+      return {
+        ...state,
+        filter: {
+          ...state.filter,
+          sortType: payload.sortType,
+          sortDirection: payload.sortDirection,
+        },
       };
     case FILTER_BY_DIETS:
-      const condition = (diet) => {
-        const name = diet.name || diet
-        return payload.includes(name.toLowerCase());
-      };
-      const search = state.recipes.filter((rcp) =>
-        rcp.diets.some((diet) => condition(diet))
-      );
-      const result = !search.length ? [undefined] : search;
       return {
         ...state,
-        filter: result
+        filter: {
+          ...state.filter,
+          diets: payload,
+          page: 1,
+        },
       };
     case CHANGE_DIETS:
       return {
         ...state,
-        selectedDiets: [...payload]
+        savedDiets: payload
       }
     case CLEAR_FILTER:
       return {
         ...state,
-        filter: [],
+        filter: {
+          ...state.filter,
+          diets: [],
+        },
       };
     case GET_DETAILS:
       return {
