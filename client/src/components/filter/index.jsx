@@ -3,47 +3,44 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   sortRecipes,
   filterByDiets,
-  setPage,
   clearFilter,
   changeDiets,
+  getRecipes, 
+  setLoading
 } from "../../redux/actions";
+
 
 import DietsCheckbox from "../dietsCheckbox";
 
 import { FilterContainer, FilterForm, FilterButton, ModalBackdrop } from "./styles";
 
+
+
 export default function Filter() {
-  const recipes = useSelector(state => state.recipes)
-  const sortType = useSelector(state => state.sortType)
-  const selectedDiets = useSelector(state => state.selectedDiets)
-  const [ order, setOrder ] = useState(sortType)
+  const {filter, savedDiets} = useSelector(state => state)
+  const {sortType, sortDirection} = filter
+  const [ sort, setSort ] = useState(JSON.stringify({sortType, sortDirection}))
   const [ show, setShow ] = useState(false)
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const { sort, sortDirection } = JSON.parse(order);
-    dispatch(sortRecipes(sort, sortDirection));
-  }, [dispatch, order, recipes])
+    dispatch(setLoading);
+    dispatch(getRecipes(filter));
+  }, [dispatch, filter]);
 
   function handleSelect(e) {
     const value = e.target.value
-    setOrder(value)
+    setSort(value)
+    dispatch(sortRecipes(JSON.parse(value)));
   }
 
   function handleDiets(values) {
-    const { sort, sortDirection } = JSON.parse(order);
-    const saveSort = () => dispatch(sortRecipes(sort, sortDirection))
-
 
     if (!values.length) {
-      dispatch(clearFilter);
-      dispatch(setPage(1))
-      return saveSort()
+      return dispatch(clearFilter);
     }
     
     dispatch(filterByDiets(values));
-    saveSort()
-    dispatch(setPage(1))
   }
 
   function setDiets(selected) {
@@ -60,38 +57,36 @@ export default function Filter() {
           Sort by:
           <select
             onChange={handleSelect}
-            defaultValue={sortType}
+            value={JSON.stringify({sortType, sortDirection})}
           >
             <option
-              value={JSON.stringify({ sort: "name", sortDirection: "ASC" })}
+              value={JSON.stringify({sortType: "", sortDirection: ""})}
+            >
+              None
+            </option>
+            <option
+              value={JSON.stringify({ sortType: "name", sortDirection: "ASC" })}
             >
               Alphabetic A - Z
             </option>
             <option
-              value={JSON.stringify({ sort: "name", sortDirection: "DESC" })}
+              value={JSON.stringify({ sortType: "name", sortDirection: "DESC" })}
             >
               Alphabetic Z - A
             </option>
             <option
-              value={JSON.stringify({
-                sort: "healthScore",
-                sortDirection: "ASC",
-              })}
+              value={JSON.stringify({ sortType: "healthScore",  sortDirection: "ASC", })}
             >
               HealthScore Asc
             </option>
             <option
-              defaultValue={"true"}
-              value={JSON.stringify({
-                sort: "healthScore",
-                sortDirection: "DESC",
-              })}
+              value={JSON.stringify({ sortType: "healthScore", sortDirection: "DESC", })}
             >
               HealthScore Desc
             </option>
           </select>
         </label>
-      <DietsCheckbox cb={handleDiets} control={selectedDiets} updateControl={setDiets} />
+      <DietsCheckbox cb={handleDiets} control={savedDiets} updateControl={setDiets} />
       </FilterForm>
     </FilterContainer>
     </>

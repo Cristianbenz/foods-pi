@@ -1,25 +1,22 @@
 import { useLocation } from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import { setLoading, clearFilter, getRecipes, changeDiets, setPage } from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { searchByName } from '../../redux/actions';
 
 import { Input } from "./styles";
 
 export default function SearchInput() {
+  const { name } = useSelector(state => state.filter)
   const { pathname } = useLocation()
   const dispatch = useDispatch()
 
   function onChange(e) {
     let value = e.target.value
-    dispatch(setLoading)
-    dispatch(clearFilter)
-    dispatch(changeDiets(new Array(12).fill(false)))
-    dispatch(setPage(1))
-    dispatch(getRecipes(value))
+    dispatch(searchByName(value.trim()))
   }
 
   if (pathname === "/home")
     return (
-      <Input type="text" placeholder="🍳" onChange={onChange} />
+      <Input value={name} type="text" placeholder="🍳" onChange={onChange} />
     );
 
   return null;
