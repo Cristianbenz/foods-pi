@@ -63,8 +63,8 @@ async function getDbRecipes(flags) {
 }
 
 async function getRecipeList(flags) {
-  const { filter } = flags
-  const { options } = flags
+  const { filter='' } = flags
+  const { options='' } = flags
   
   const { name, diets } = filter
   const { sortType='', sortDirection='', page=1 } = options
