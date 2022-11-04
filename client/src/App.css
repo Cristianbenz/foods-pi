@@ -23,7 +23,7 @@ img {
   height: auto;
 }
 
-html, #root, body {
+body {
   background-color: #f8a990;
   overflow-x: hidden;
   min-height: 100vh;
