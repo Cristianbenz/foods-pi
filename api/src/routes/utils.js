@@ -1,8 +1,6 @@
 const axios = require("axios");
 const { Recipe, Diet, Op } = require("../db");
-const { API_KEY } = process.env;
-const API = "https://api.spoonacular.com/";
-const LIST_URL = `${API}recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`;
+const RECIPES = require('../../recipes.json')
 async function preloadDiets() {
   const diets = [
     "Gluten Free",
@@ -20,34 +18,29 @@ async function preloadDiets() {
   ].map((el) => {
     return { name: el };
   });
-
   Diet.bulkCreate(diets);
 }
 
-async function getApiRecipes(flags) {
-  try {
-    let get = await axios(LIST_URL);
-    let results = get.data.results;
-    
-    if (flags.name && get.data) {
-      results = get.data.results.filter((recipe) => {
-        return recipe.title.toLowerCase().includes(flags.name.toLowerCase());
-      });
-    }
-
-    if (results)
-      return results.map((recipe) => {
-        return {
-          id: recipe.id,
-          image: recipe.image,
-          name: recipe.title,
-          healthScore: recipe.healthScore,
-          diets: recipe.diets,
-        };
-      });
-  } catch (error) {
-      return [];
-  }
+async function preLoadRecipes() {
+  RECIPES.forEach(async recipe => {
+    const {name, image, summary, healthScore, analyzedInstructions, diets} = recipe
+    const steps = analyzedInstructions[0]?.steps.map(el => el.step)
+    const newRecipe = await Recipe.create({
+      name,
+      image,
+      summary,
+      healthScore,
+      steps
+    })
+    const findDiets = await Diet.findAll({
+      where: {
+        name: {
+          [Op.or]: diets.map(el => ({[Op.iLike]: el}))
+        }
+      }
+    })
+    await newRecipe.addDiets(findDiets)
+  });
 }
 
 async function getDbRecipes(flags) {
@@ -124,6 +117,7 @@ function recipeDataValidation(body) {
 
 module.exports = {
   preloadDiets,
+  preLoadRecipes,
   getRecipeList,
   getRecipeDetails,
   recipeDataValidation,
