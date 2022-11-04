@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getRecipes, setLoading, setPage } from "../../redux/actions";
+import { setPage } from "../../redux/actions";
 
 import CardsList from "../../components/cardsList";
 import Filter from "../../components/filter";
@@ -9,32 +8,13 @@ import Pagination from "../../components/pagination";
 import { BodyContainer } from "./styles";
 
 export default function Home() {
-  const list = useSelector((state) => state.recipes);
-  const filter = useSelector((state) => state.filter);
-  const page = useSelector((state) => state.page);
-  const [recipes, setRecipes] = useState([]);
-
+  const { recipes, filter } = useSelector((state) => state);
   const dispatch = useDispatch();
-  const totalPages = Math.ceil((filter.length || list.length) / 9) || 1;
-
-  useEffect(() => {
-    dispatch(setLoading);
-    dispatch(getRecipes());
-  }, [dispatch]);
+  const totalPages = Math.ceil(recipes.count / 9) || 1;
 
   function handlePagination(currentPage) {
     dispatch(setPage(currentPage));
   }
-
-  useEffect(() => {
-    if (filter.length && !filter[0]) {
-      setRecipes([]);
-    } else if (filter.length) {
-      setRecipes(filter.slice((page - 1) * 9, page * 9));
-    } else {
-      setRecipes(list.slice((page - 1) * 9, page * 9));
-    }
-  }, [page, filter, list]);
 
   return (
     <div className="background homeBackground">
@@ -45,13 +25,13 @@ export default function Home() {
           <div>
             <Pagination
               totalPages={totalPages}
-              currentPage={page}
+              currentPage={filter.page}
               handle={handlePagination}
             />
-            <CardsList list={recipes} />
+            <CardsList list={recipes.rows} />
             <Pagination
               totalPages={totalPages}
-              currentPage={page}
+              currentPage={filter.page}
               handle={handlePagination}
             />
           </div>
