@@ -46,8 +46,8 @@ Server with Node and Express:
 
 - __GET /recipes__: Bring a list of the all recipes in the database.
 - __GET /recipes?__: Bring a list of recipes that includes the results that matchs with the given parameters.
-  -filter[name, diets]
-  -options[page, sortType, sortDirection]
+  - filter[name, diets]
+  - options[page, sortType, sortDirection]
 - __GET /recipes/:recipeId__: Bring the details of an especific recipe.
 - __POST /recipes__: Create a recipe entity with the information obtained through a controlled form.
 - __GET /diets__: Bring all kind of recipes in the database.
