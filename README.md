@@ -5,9 +5,9 @@ It's a web in wich you can look diferent kind of recipes and get information lik
 ## Images
 
 ## Quick Start
-1- Clone the repository.
-2- Open one terminal into the /api path and another into /client route.
-3- Finally write "npm i" and then "npm start" in both of them.
+1. Clone the repository.
+2. Open one terminal into the /api path and another into /client route.
+3. Finally write "npm i" and then "npm start" in both of them.
 
 ## Technologies
 Project made with:
