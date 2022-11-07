@@ -2,6 +2,13 @@
 
 It's a web in wich you can look diferent kind of recipes and get information like step by step, healthscore and a summary. At the home, there are some options to sort the results by alphabetic or healthscore and filter by kind of diet. Also you can create your own recipes.
 
+## Images
+
+## Quick Start
+1- Clone the repository.
+2- Open one terminal into the /api path and another into /client route.
+3- Finally write "npm i" and then "npm start" in both of them.
+
 ## Technologies
 Project made with:
 - React Js.
