@@ -6,6 +6,8 @@ import loader from "../../assets/detailLoader.gif";
 import { getDetails, setLoading, clearDetails } from "../../redux/actions";
 import imgPredeterminada from "../../assets/imgPredeterminada.png";
 
+import Layout from "../../components/Layout";
+
 import {
   LoaderContainer,
   FirstSection,
@@ -42,7 +44,7 @@ export default function RecipeDetails() {
   }
 
   return (
-    <div className="background detailsBackgorund">
+    <Layout bgPic="detailsBackgorund">
       {!Object.keys(details).length ? (
         <div>
           <h1>This recipe doesn't exist.</h1>
@@ -88,6 +90,6 @@ export default function RecipeDetails() {
           </SecondSection>
         </div>
       )}
-    </div>
+    </Layout>
   );
 }
