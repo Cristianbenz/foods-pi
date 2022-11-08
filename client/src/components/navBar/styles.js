@@ -4,16 +4,17 @@ export const Header = styled.header`
 	position: sticky;
 	top: 0px;
 	z-index: 999;
+	background-color: ${({theme}) => theme.color.secondary};
+	
+`
+
+export const Container = styled.section`
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 9px 16px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 9px 16px;
-	background-color: ${({theme}) => theme.color.secondary};
-
-	@media screen and (min-width: 800px) {
-		padding: 9px 40px;
-	}
-	
 `
 
 export const Logo = styled.img`
