@@ -12,6 +12,7 @@ It's a web in wich you can look diferent kind of recipes and get information lik
 ## Technologies
 Project made with:
 - React Js.
+- Node Js.
 - Styled Components.
 - Redux.
 - Express.
