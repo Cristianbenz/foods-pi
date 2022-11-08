@@ -29,15 +29,7 @@ body {
   min-height: 100vh;
 }
 
-.background {
-  background-size: cover;
-  background-position: right;
-  background-attachment: fixed;
-
-  /* background-size: cover; */
-}
-
-.background > div {
+.main > div {
   min-height: 100vh;
   backdrop-filter: blur(4px) brightness(.9);
 }
