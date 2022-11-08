@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setPage } from "../../redux/actions";
 
+import Layout from "../../components/Layout";
 import CardsList from "../../components/cardsList";
 import Filter from "../../components/filter";
 import Pagination from "../../components/pagination";
@@ -17,9 +18,7 @@ export default function Home() {
   }
 
   return (
-    <div className="background homeBackground">
-      <div>
-        <h1 className="title">Recipes</h1>
+    <Layout title='Recipes' bgPic="homeBackground">
         <BodyContainer>
           <Filter />
           <div>
@@ -36,7 +35,6 @@ export default function Home() {
             />
           </div>
         </BodyContainer>
-      </div>
-    </div>
+    </Layout>
   );
 }
