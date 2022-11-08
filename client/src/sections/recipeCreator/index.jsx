@@ -1,32 +1,39 @@
 import { useEffect, useState } from "react";
-import { useHistory } from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { addRecipe } from "../../redux/actions";
 import { formSchema, validations } from "./utils";
 
+import Layout from "../../components/Layout";
 import RecipeForm from "../../components/recipeForm";
 import Card from "../../components/card";
-import ToastContainer, { toast } from '../../components/notifications';
+import ToastContainer, { toast } from "../../components/notifications";
 
-import { CreateSection, DetailsContainer, Summary, StepsContainer, Step } from "./styles";
+import {
+  CreateSection,
+  DetailsContainer,
+  Summary,
+  StepsContainer,
+  Step,
+} from "./styles";
 
 export default function RecipeCreator() {
-  const [formData, setFormData] = useState({...formSchema});
+  const [formData, setFormData] = useState({ ...formSchema });
   const [error, setError] = useState({});
-  const [notifications, setNotifications] = useState([])
+  const [notifications, setNotifications] = useState([]);
 
-  const { push } = useHistory()
-  const dispatch = useDispatch()
+  const { push } = useHistory();
+  const dispatch = useDispatch();
 
   function onChange(e) {
     const target = e.target;
     const name = target.name;
     let value = target.value;
 
-    if(name === 'healthScore') {
-      if(value < 0) value = 0
-      else if(value > 100) value = 100
+    if (name === "healthScore") {
+      if (value < 0) value = 0;
+      else if (value > 100) value = 100;
     }
 
     setFormData((prevData) => {
@@ -34,16 +41,16 @@ export default function RecipeCreator() {
         ...prevData,
         recipe: {
           ...prevData.recipe,
-          [name]: value
-        }
+          [name]: value,
+        },
       };
     });
   }
 
   useEffect(() => {
     const errors = validations(formData.recipe);
-    setError(errors)
-  }, [formData])
+    setError(errors);
+  }, [formData]);
 
   function handleDiets(values) {
     setFormData((prevData) => {
@@ -60,35 +67,52 @@ export default function RecipeCreator() {
         ...prevInfo,
         recipe: {
           ...prevInfo.recipe,
-          steps: steps
-        }
+          steps: steps,
+        },
       };
     });
   }
 
   function handleSubmit(e) {
-		e.preventDefault()
-		if(Object.keys(error) < 1) {
+    e.preventDefault();
+    if (Object.keys(error) < 1) {
       try {
         dispatch(addRecipe(formData));
-        setFormData({...formSchema});
-        toast('success', 'Receta creada correctamente', notifications, setNotifications);
+        setFormData({ ...formSchema });
+        toast(
+          "success",
+          "Receta creada correctamente",
+          notifications,
+          setNotifications
+        );
         setTimeout(() => {
-          push('/home')
-        }, 1000)
+          push("/home");
+        }, 1000);
       } catch (error) {
-          toast('error', 'Ya existe esta receta', notifications, setNotifications)
+        toast(
+          "error",
+          "Ya existe esta receta",
+          notifications,
+          setNotifications
+        );
       }
-		} else {
-      toast('error', 'No se cumplen los requisitos', notifications, setNotifications)
+    } else {
+      toast(
+        "error",
+        "No se cumplen los requisitos",
+        notifications,
+        setNotifications
+      );
     }
-	}
+  }
 
   return (
-    <div className="background formBackground">
-      <div>
-        <ToastContainer notifications={notifications} setNotifications={setNotifications} />
-        <h1 className="title">Add your own recipe!</h1>
+    <>
+      <ToastContainer
+          notifications={notifications}
+          setNotifications={setNotifications}
+        />
+      <Layout title='Add your own recipe!' bgPic="formBackground">
         <CreateSection>
           <RecipeForm
             data={formData}
@@ -124,7 +148,7 @@ export default function RecipeCreator() {
             </div>
           </DetailsContainer>
         </CreateSection>
-      </div>
-    </div>
+      </Layout>
+    </>
   );
 }

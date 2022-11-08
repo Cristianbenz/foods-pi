@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const BodyContainer = styled.div`
+export const BodyContainer = styled.section`
   display: flex;
   flex-direction: column;
   padding: 10px 20px;
