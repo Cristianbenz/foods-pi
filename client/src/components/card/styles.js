@@ -2,22 +2,22 @@ import styled from "styled-components";
 
 export const CardContainer = styled.article`
   position: relative;
-  width: 320px;
+  width: 250px;
   height: 100%;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   box-shadow: 0 0 7px 2px rgba(0, 0, 0, 0.4);
   background-color: ${({ theme }) => theme.color.secondary};
-  overflow: hidden;
+  overflowX: hidden;
 
   h3 {
-    font-size: 30px;
+    font-size: 22px;
     font-weight: bolder;
     margin: 10px auto;
   }
 
   img{
-    height: 260px;
+    height: auto;
   }
 `;
 
@@ -29,7 +29,7 @@ export const HealthScorePin = styled.span`
   padding: 10px 12px;
   border-radius: 50%;
   font-weight: bolder;
-  font-size: 20px;
+  font-size: 18px;
 `;
 
 export const InfoContainer = styled.div`
